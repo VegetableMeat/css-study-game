@@ -1,0 +1,9 @@
+div canvas {
+    vertical-align: top;
+}
+#main, 
+#user,
+#answer {
+    border: solid;
+    display: inline-block;
+}
