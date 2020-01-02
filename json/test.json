@@ -1,0 +1,31 @@
+{
+  "class": [
+    [
+      {
+        "type": "三角形",
+        "parameter": [ "border-width" ],
+        "regular": {
+          "border-width": "^([0-9]+px) ([0-9]+px) ([0-9]+px) ([0-9]+px)$"
+        }
+      },
+      {
+        "type": "四角",
+        "parameter": [ "border-width" ]
+      },
+      {
+        "type": "丸",
+        "parameter": [ "width", "height", "border-radius" ],
+        "regular": {
+          "width": "",
+          "height": "",
+          "border-radius": ""
+        }
+      }
+    ],
+    [
+      {
+        "type": "三"
+      }
+    ]
+  ]
+}

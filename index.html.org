@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS Study Game</title>
+    <link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+</head>
+<style>
+    * {
+  margin: 0;
+  padding: 0;
+  color: #2c2c2c; }
+
+    html {
+    line-height: 1.15; }
+
+    body {
+    position: relative;
+    color: #2c2c2c;
+    letter-spacing: .05em;
+    background: linear-gradient(to right, #d6efff, #b5dbff);
+    font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+    font-weight: 400; }
+
+    html {
+    overflow-y: scroll; }
+
+    h1, h2, h3, h4, h5, h6 {
+    font-weight: 400; }
+
+    p, li, dt, dl {
+    line-height: 1.6; }
+
+    p {
+    margin: 0 0 1em 0;
+    line-height: 2; }
+
+    li {
+    list-style-type: none; }
+
+    *, *::before, *::after {
+    box-sizing: border-box; }
+
+    a:link, a:visited, a:hover, a:active {
+    text-decoration: none; }
+
+    header {
+    width: 100vw;
+    height: 60px;
+    padding: 12px 0;
+    text-align: center;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.3)); }
+    header .header-icon {
+        margin: 0 12px; }
+        header .header-icon i {
+        font-size: 36px;
+        color: #3996d6; }
+    header .header-title h1 {
+        color: #3996d6; }
+
+    #main-body {
+    width: 92vw;
+    max-width: 1000px;
+    min-height: 100vh;
+    margin: 40px 4vw;
+    padding: 60px 40px;
+    background-color: #f1fbff;
+    filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.3)); }
+    @media screen and (min-width: 768px) {
+        #main-body {
+        margin: 40px auto; } }
+
+    button {
+    font-size: 28px;
+    padding: 4px 12px;
+    color: white;
+    background-color: skyblue;
+    border: 1px solid rgba(255, 255, 255, 0);
+    border-radius: 12px;
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
+    transition: .2s ease-in-out; }
+    button:hover {
+        background-color: #3093d4; }
+    button:active {
+        background-color: #3587be;
+        filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.4)); }
+
+    .start-button button {
+    font-size: 28px;
+    padding: 4px 12px;
+    color: white;
+    background-color: skyblue;
+    border: 1px solid rgba(255, 255, 255, 0);
+    border-radius: 12px;
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
+    transition: .2s ease-in-out; }
+    .start-button button:hover {
+        background-color: #3093d4; }
+    .start-button button:active {
+        background-color: #3587be;
+        filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.4)); }
+
+    .user-answer-area {
+    width: 400px;
+    height: 400px;
+    background-color: #b6b6b6; }
+
+    /*# sourceMappingURL=style.css.map */
+</style>
+<body>
+    <header>
+        <div class="header-icon">
+            <i class="fab fa-css3-alt"></i>
+        </div>
+        <div class="header-title">
+            <h1>CSS Study Game</h1>
+        </div>
+    </header>
+    <div id="main-body">
+        <div class="start-button">
+            <button onfocus="this.blur();">START</button>
+        </div>
+        <div class="game-area">
+            <div class="question-area">
+                <h2>問題</h2>
+                <div class="question-text">
+                    <p>横幅が100px、縦の高さが200pxの三角形を作成してください。</p>
+                </div>
+            </div>
+            <!--
+            <div class="hint-message">
+                <span>ヒント</span>
+                <p>radiusを使って丸くすると良いかも！</p>
+            </div>
+            -->
+
+            <div class="user-answer-area">
+                <h2>現在の形</h2>
+                <div class="object"></div>
+            </div>
+
+            <div class="user-input-area">
+                <div class="error-message">
+                    <p>どこどこがエラーです</p>
+                </div>
+                <div class="run-button">
+                    <!-- <button onfocus="this.blur();">実行</button> -->
+                    <button id="run-btn" onfocus="this.blur();">実行</button>
+                </div>
+                <div class="css-start-label">
+                    #player {
+                </div>
+                <div class="input-css"></div>
+                <div class="css-end-label">
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+
+    </footer>
+    <script src="./js/script.js"></script>
+</body>
+</html>

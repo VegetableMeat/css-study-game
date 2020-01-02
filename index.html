@@ -7,112 +7,237 @@
     <title>CSS Study Game</title>
     <link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <style>
-    * {
+* {
   margin: 0;
   padding: 0;
   color: #2c2c2c; }
 
-    html {
-    line-height: 1.15; }
+html {
+  line-height: 1.15; }
 
-    body {
-    position: relative;
-    color: #2c2c2c;
-    letter-spacing: .05em;
-    background: linear-gradient(to right, #d6efff, #b5dbff);
-    font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
-    font-weight: 400; }
+body {
+  position: relative;
+  color: #2c2c2c;
+  letter-spacing: .05em;
+  background: linear-gradient(to right, #d6efff, #b5dbff);
+  font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+  font-weight: 400; }
 
-    html {
-    overflow-y: scroll; }
+html {
+  overflow-y: scroll; }
 
-    h1, h2, h3, h4, h5, h6 {
-    font-weight: 400; }
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400; }
 
-    p, li, dt, dl {
-    line-height: 1.6; }
+p, li, dt, dl {
+  line-height: 1.6; }
 
-    p {
-    margin: 0 0 1em 0;
-    line-height: 2; }
+p {
+  margin: 0 0 1em 0;
+  line-height: 2; }
 
-    li {
-    list-style-type: none; }
+li {
+  list-style-type: none; }
 
-    *, *::before, *::after {
-    box-sizing: border-box; }
+*, *::before, *::after {
+  box-sizing: border-box; }
 
-    a:link, a:visited, a:hover, a:active {
-    text-decoration: none; }
+a:link, a:visited, a:hover, a:active {
+  text-decoration: none; }
 
+header {
+  width: 100vw;
+  height: 60px;
+  padding: 12px 0;
+  text-align: center;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.3)); }
+  header .header-icon {
+    margin: 0 12px; }
+    header .header-icon i {
+      font-size: 36px;
+      color: #3996d6; }
+  header .header-title h1 {
+    color: #3996d6; }
+  @media screen and (max-width: 767px) {
     header {
-    width: 100vw;
-    height: 60px;
-    padding: 12px 0;
-    text-align: center;
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.3)); }
-    header .header-icon {
-        margin: 0 12px; }
-        header .header-icon i {
-        font-size: 36px;
-        color: #3996d6; }
-    header .header-title h1 {
-        color: #3996d6; }
+      height: 46px; }
+      header .header-title h1 {
+        font-size: 24px; }
+      header .header-icon i {
+        font-size: 24px; } }
 
+#main-body {
+  width: 92vw;
+  max-width: 1000px;
+  min-height: 100vh;
+  margin: 40px 4vw;
+  padding: 20px 40px;
+  background-color: #f1fbff;
+  filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.3));
+  transition: filter 0.2s ease-in-out; }
+  @media screen and (min-width: 768px) {
     #main-body {
-    width: 92vw;
-    max-width: 1000px;
-    min-height: 100vh;
-    margin: 40px 4vw;
-    padding: 60px 40px;
-    background-color: #f1fbff;
-    filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.3)); }
-    @media screen and (min-width: 768px) {
-        #main-body {
-        margin: 40px auto; } }
+      margin: 40px auto; } }
+  @media screen and (max-width: 767px) {
+    #main-body {
+      padding: 20px 10px;
+      margin: 20px 2vw;
+      width: 96vw; } }
 
-    button {
-    font-size: 28px;
-    padding: 4px 12px;
-    color: white;
-    background-color: skyblue;
-    border: 1px solid rgba(255, 255, 255, 0);
-    border-radius: 12px;
-    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
-    transition: .2s ease-in-out; }
-    button:hover {
-        background-color: #3093d4; }
-    button:active {
-        background-color: #3587be;
-        filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.4)); }
+button {
+  font-size: 28px;
+  padding: 4px 12px;
+  color: white;
+  background-color: skyblue;
+  border: 1px solid rgba(255, 255, 255, 0);
+  border-radius: 12px;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
+  transition: .2s ease-in-out; }
+  button:hover {
+    background-color: #3093d4; }
+  button:active {
+    background-color: #3587be;
+    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.4)); }
 
-    .start-button button {
-    font-size: 28px;
-    padding: 4px 12px;
-    color: white;
-    background-color: skyblue;
-    border: 1px solid rgba(255, 255, 255, 0);
-    border-radius: 12px;
-    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
-    transition: .2s ease-in-out; }
-    .start-button button:hover {
-        background-color: #3093d4; }
-    .start-button button:active {
-        background-color: #3587be;
-        filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.4)); }
+.game-header {
+  margin: 40px 40px 20px;
+  border-bottom: 3px solid #3996d6;
+  padding-bottom: 12px; }
+  @media screen and (max-width: 767px) {
+    .game-header {
+      margin: 20px 20px 0; } }
+  .game-header .game-title {
+    text-align: center; }
+    .game-header .game-title h1 {
+      font-size: 32px;
+      color: #1b4fd0; }
+      @media screen and (max-width: 767px) {
+        .game-header .game-title h1 {
+          font-size: 20px; } }
 
+.start-before-area {
+  text-align: center; }
+  .start-before-area .start-button {
+    margin-top: 10vh; }
+    .start-before-area .start-button button {
+      font-size: 42px;
+      padding: 12px 28px; }
+  .start-before-area .warn-message {
+    margin-top: 20px; }
+    .start-before-area .warn-message p {
+      font-size: 16px;
+      color: #e6492e; }
+
+.game-area {
+  display: none;
+  margin-top: 40px; }
+
+.question-area {
+  display: inline-block;
+  width: 100%; }
+  .question-area .game-count {
+    text-align: right;
+    font-size: 18px; }
+    .question-area .game-count span {
+      color: #1b4fd0;
+      font-weight: 600; }
+  .question-area h2 {
+    padding-bottom: 12px;
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.2); }
+
+.user-answer-area h2, .user-input-area h2 {
+  margin-bottom: 16px; }
+
+.user-answer-area {
+  margin: 40px 0;
+  float: left; }
+  .user-answer-area .output-css-area {
+    width: 30vw;
+    height: 30vw;
+    background: linear-gradient(135deg, #e2e2e2, #999999);
+    filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.3)); }
+  @media screen and (max-width: 767px) {
     .user-answer-area {
-    width: 400px;
-    height: 400px;
-    background-color: #b6b6b6; }
+      float: none;
+      margin: 20px 0; }
+      .user-answer-area .output-css-area {
+        width: calc(100vw - 4vw - 20px);
+        height: calc(100vw - 4vw - 20px); } }
 
-    /*# sourceMappingURL=style.css.map */
+.user-input-area {
+  margin: 40px 0 40px 40px; }
+  .user-input-area .input-css {
+    padding: 0 0 0 20px; }
+    @media screen and (max-width: 767px) {
+      .user-input-area .input-css {
+        padding: 0 0 0 10px; } }
+
+.run-button {
+  text-align: right;
+  margin-top: 20px; }
+  .run-button button {
+    font-size: 24px;
+    padding: 4px 48px; }
+
+.error-message {
+  margin: 40px 0 40px 40px; }
+  .error-message h3, .error-message p {
+    color: #e6492e; }
+  .error-message h3 {
+    display: inline;
+    padding-bottom: 4px;
+    font-size: 24px;
+    border-bottom: 3px double red; }
+  .error-message p {
+    margin-top: 8px;
+    font-size: 16px; }
+
+.user-input-area, .error-message {
+  display: inline-block;
+  width: calc(100% - 30vw - 40px); }
+  @media screen and (max-width: 767px) {
+    .user-input-area, .error-message {
+      margin: 20px 0 0;
+      width: 100%; } }
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 38vh;
+  left: 0;
+  width: 100vw;
+  padding: 40px;
+  box-shadow: #2c2c2c; }
+
+.clear-message, .next-button {
+  text-align: center;
+  margin: 0 0 20px; }
+
+.clear-message {
+  clear: both;
+  position: relative;
+  padding: 12px 20px;
+  border-bottom: solid 2px #3996d6;
+  border-top: solid 2px #3996d6; }
+  .clear-message h3 {
+    display: inline;
+    color: #3996d6;
+    font-weight: 600;
+    font-size: 32px; }
+
+.next-button button {
+  padding: 16px 48px;
+  border: 0;
+  background: linear-gradient(to bottom, #00ffbf, #3996d6); }
+
+/*# sourceMappingURL=style.css.map */
+
 </style>
 <body>
     <header>
@@ -123,13 +248,27 @@
             <h1>CSS Study Game</h1>
         </div>
     </header>
-    <div id="main-body">
-        <div class="start-button">
-            <button onfocus="this.blur();">START</button>
+    <div class="game-header">
+        <div class="game-title">
+            <h1>指定された条件のオブジェクトをCSSで作ろう！</h1>
         </div>
+    </div>
+    <div id="main-body">
+        <div class="start-before-area">
+            <div class="start-button">
+                <button onfocus="this.blur();">GAME START</button>
+            </div>
+            <div class="warn-message">
+                <p>※ゲームスタートボタンを押すとゲームが開始され、タイムの計測が開始します。</p>
+            </div>
+        </div>
+        
         <div class="game-area">
             <div class="question-area">
-                <h2>問題</h2>
+                <div class="game-count">
+                    <span>5/1</span>
+                </div>
+                <h2>問題文</h2>
                 <div class="question-text">
                     <p>横幅が100px、縦の高さが200pxの三角形を作成してください。</p>
                 </div>
@@ -143,24 +282,40 @@
 
             <div class="user-answer-area">
                 <h2>現在の形</h2>
-                <div class="object"></div>
+                <div class="output-css-area">
+                    <div class="object"></div>
+                </div>
             </div>
 
             <div class="user-input-area">
-                <div class="error-message">
-                    <p>どこどこがエラーです</p>
-                </div>
-                <div class="run-button">
-                    <button onfocus="this.blur();">実行</button>
-                </div>
+                <h2>CSS</h2>
                 <div class="css-start-label">
                     #player {
                 </div>
-                <div class="input-css"></div>
+                <div class="input-css">
+        <!--             <input type="text"> : <input type="text"> ;<br>
+                    <input type="text"> : <input type="text"> ;<br>
+                    <input type="text"> : <input type="text"> ; -->
+                </div>
                 <div class="css-end-label">
                     }
                 </div>
             </div>
+            <div class="run-button">
+                <button onfocus="this.blur();">実行</button>
+            </div>
+            <div class="error-message">
+                <h3>エラー</h3>
+                <p>※不正なプロパティまたは値が入力されています。</p>
+            </div>
+        </div>
+    </div>
+    <div class="modal">
+        <div class="clear-message">
+            <h3>Stage Clear!</h3>
+        </div>
+        <div class="next-button">
+                <button onfocus="this.blur();">NEXT</button>
         </div>
     </div>
     <footer>
@@ -168,4 +323,35 @@
     </footer>
     <script src="./js/script.js"></script>
 </body>
+<script>
+$(function(){
+    //スタートボタン
+    $(".start-button button").click(function(){
+        $(".start-before-area").css("display","none");
+        $(".game-area").css("display","block");
+    });
+
+    // //実行ボタン
+    // $(".run-button button").click(function(){
+    //     var clearFlg = true;
+    //     //判定処理
+        
+    //     if(clearFlg === true){
+    //         $(".modal").css("display", "block");
+    //         $("#main-body").css("filter", "blur(8px)");
+    //     }else{
+    //         //エラーメッセージ出力処理
+
+    //     }
+        
+    // });
+
+    $(".next-button button").click(function(){
+        //次のステージに行く処理
+
+        $(".modal").css("display", "none");
+        $("#main-body").css("filter", "none");
+    });
+});
+</script>
 </html>
