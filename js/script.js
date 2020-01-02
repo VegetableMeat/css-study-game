@@ -1,11 +1,20 @@
 $(function() {
-    var form = Math.floor(Math.random() * 1);
-    var width = (Math.floor(Math.random() * 10) * 10) + 10;
-    var height = (Math.floor(Math.random() * 10) * 10) + 10;
+    // TODO 難易度をどういう基準で変更するか考える
+    // 難易度
+    var diff = 0;
+    // 形を決める
+    var form = 1;
+
+    if(form == 2) {
+        var width = height = (Math.floor(Math.random() * 14) * 10) + 20;
+    } else {
+        var width = (Math.floor(Math.random() * 14) * 10) + 20;
+        var height = (Math.floor(Math.random() * 14) * 10) + 20;
+    }
 
     ajax()
     .done((data) => {
-        var json_data = data["class"][form][form];
+        var json_data = data["class"][diff][form];
         $('.question-text p')[0].innerHTML = "横" + width + "px、縦" + height + "pxの" + json_data["type"] + "を作成してください。";
 
         setElement(json_data["parameter"].length);
@@ -18,14 +27,12 @@ $(function() {
     $('.run-button button').on('click', function() {
         ajax()
         .done((data) => {
-            var stage = data["class"][form][form];
+            var stage = data["class"][diff][form];
             var result = inputCheck($('.input-css input'), stage);
 
             if(result) {
-                // error
                 console.log("checkが終わったよ");
                 console.log(result);
-                // return;
             }
 
             $('.object')
@@ -33,16 +40,16 @@ $(function() {
                 'width':'0',
                 'height':'0',
                 'border-style':'solid',
-                'border-color':'transparent transparent #000 transparent',
-                // 'border-radius':'50%',
-                // 'border-color':'#fff',
-                // 'background':'#fff',
                 'position':'absolute',
                 'top':'50%',
                 'left':'50%',
                 'transform':'translate(-50%, -50%)'
             });
             // TODO 答え合わせを実装
+            for(key in data["class"][diff][form]["default"]) {
+                $('.object').css(key, data["class"][diff][form]["default"][key]);
+            }
+
             for(key in result[1]) {
                 console.log("key: " + key);
                 console.log("result[key]: " + result[1][key]);

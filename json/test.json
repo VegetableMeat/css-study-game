@@ -3,28 +3,43 @@
     [
       {
         "type": "三角形",
+        "default": {
+          "border-color":"transparent transparent #000 transparent"
+        },
         "parameter": [ "border-width" ],
         "regular": {
           "border-width": "^([0-9]+px) ([0-9]+px) ([0-9]+px) ([0-9]+px)$"
         }
       },
       {
-        "type": "四角",
-        "parameter": [ "border-width" ]
+        "type": "四角形",
+        "default": {
+          "border-color":"#000",
+          "background":"#000"
+        },
+        "parameter": [ "width", "height" ],
+        "regular": {
+          "width": "^([0-9]+px)$",
+          "height": "^([0-9]+px)$"
+        }
       },
       {
-        "type": "丸",
+        "type": "円",
+        "default": {
+          "border-color":"#000",
+          "background":"#000"
+        },
         "parameter": [ "width", "height", "border-radius" ],
         "regular": {
-          "width": "",
-          "height": "",
-          "border-radius": ""
+          "width": "^([0-9]+px)$",
+          "height": "^([0-9]+px)$",
+          "border-radius": "^([1-9]|[1-9][0-9]|100)%$"
         }
       }
     ],
     [
       {
-        "type": "三"
+        
       }
     ]
   ]
