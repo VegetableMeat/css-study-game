@@ -119,11 +119,15 @@ header{
             li{
                 font-size: 18px;
                 padding: 4px 12px;
+                transition: transform 0.2s;
                 .fa-user-alt{
-                    color: $sub-color;
+                    color: $main-color;
                 }
                 .fa-sign-out-alt{
-                    color: gray;
+                    color: rgb(167, 167, 167);
+                }
+                &:hover{
+                    transform: scale(1.4);
                 }
             }
         }
@@ -221,6 +225,9 @@ button{
 .game-area{
     display: none;
     margin-top: 40px;
+    h2, p{
+        color: rgb(121, 121, 121);
+    }
 }
 
 .question-area{
@@ -242,7 +249,7 @@ button{
 
 .user-answer-area, .user-input-area{
     h2{
-        margin-bottom: 16px;
+        margin-bottom: 12px;
     }
 }
 
@@ -253,9 +260,12 @@ button{
         position: relative;
         width: 30vw;
         height: 30vw;
+        max-height: 300px;
+        max-width: 300px;
         background: linear-gradient(135deg, #e2e2e2, #999999);
         filter: drop-shadow(4px 4px 6px rgba(0,0,0,0.3));
-        .object{
+        #object{
+            /*
             position: absolute;
             top: 40%;
             left: 40%;
@@ -263,6 +273,7 @@ button{
             width: 20%;
             border-radius: 20%;
             background-color: white;
+            */
         }
     }
     @include mq-down(){
@@ -277,6 +288,28 @@ button{
 
 .user-input-area{
     margin: 40px 0 40px 40px;
+    .code-area{
+        padding: 48px 12px;
+        border-radius: 3px;
+        background: rgb(95, 95, 95);
+        max-height: 300px;
+        min-height: 200px;
+        height: 30vw;
+        @include mq-down(){
+            padding: 24px 8px;
+        }
+        *{
+            color: white;
+            font-weight: 300;
+            letter-spacing: 1.5px;
+        }
+        .comment{
+            color: rgb(161, 161, 161);
+        }
+        .id-name{
+            color: rgb(173, 184, 221);
+        }
+    }
     .css-start-label, .css-end-label{
 
     }
@@ -292,11 +325,14 @@ button{
             padding: 0 0 0 10px;
         }
         input{
+            width: 40%;
             font-size: 12.5px;
             padding: 2px 4px;
             margin: 4px 4px;
             border: 2px solid #ddd;
             border-radius: 3px;
+            color: rgb(77, 77, 77);
+            font-weight: 300;
             &:focus{
                 border: 2px solid $sub-color; 
                 z-index: 10;
@@ -442,7 +478,11 @@ button{
         padding: 28px;
         border-radius: 8px;
         background: linear-gradient(to bottom, rgb(225, 245, 233), rgb(223, 231, 245));
-        filter: drop-shadow(4px 4px 6px rgba(99, 99, 99, 0.404))
+        filter: drop-shadow(5px 5px 6px rgba(99, 99, 99, 0.404));
+        transition: filter 0.3s;
+        &:hover{
+            filter: drop-shadow(2px 2px 2px rgba(99, 99, 99, 0.555));
+        }
     }
     .game-card-title{
         padding-bottom: 8px;
@@ -454,12 +494,15 @@ button{
         }
     }
     .game-desc{
+        h3{
+            font-size: 16px;
+        }
         p{
-            font-size: 14px;
+            font-size: 12.5px;
         }
     }
     .game-info{
-        font-size: 14px;
+        font-size: 12px;
         display: flex;
         flex-wrap:wrap;
         div{
@@ -541,6 +584,9 @@ button{
                 &::placeholder{
                     color: rgb(204, 204, 204);
                 }
+                &:hover{
+                    background: rgb(230, 230, 230);
+                }
                 &:focus{
                     border: 1px solid rgb(0, 153, 255);
                     background: white;
@@ -549,7 +595,7 @@ button{
             i{
                 position: absolute;
                 left: 0;
-                top: 8px;
+                top: 10px;
                 padding: 9px 8px;
                 color: #aaa;
             }
@@ -562,6 +608,11 @@ button{
             font-size: 24px;
             background: rgb(85, 230, 140);
             padding: 6px 32px;
+            cursor: pointer;
+            transition: background 0.3s;
+            &:hover{
+                background: rgb(0, 199, 76);
+            }
         }
     }
     .login-link{
@@ -632,11 +683,8 @@ button{
                 border-radius: 12px;
                 background: rgb(231, 231, 231);
             }
-            .base-bar{
-
-            }
             .exp-bar{
-                transition: width 0.8s ease-in-out;
+                transition: width 1s ease-in-out;
                 width: 0;
                 background: linear-gradient(to right, rgb(119, 223, 51), rgb(47, 224, 186));
             }

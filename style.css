@@ -72,11 +72,14 @@ header {
     display: flex; }
     header .header-nav ul li {
       font-size: 18px;
-      padding: 4px 12px; }
+      padding: 4px 12px;
+      transition: transform 0.2s; }
       header .header-nav ul li .fa-user-alt {
-        color: #1b4fd0; }
+        color: #3996d6; }
       header .header-nav ul li .fa-sign-out-alt {
-        color: gray; }
+        color: #a7a7a7; }
+      header .header-nav ul li:hover {
+        transform: scale(1.4); }
     @media screen and (max-width: 767px) {
       header .header-nav {
         right: 10px;
@@ -153,6 +156,8 @@ button {
 .game-area {
   display: none;
   margin-top: 40px; }
+  .game-area h2, .game-area p {
+    color: #797979; }
 
 .question-area {
   display: inline-block;
@@ -168,7 +173,7 @@ button {
     border-bottom: 1.5px solid rgba(0, 0, 0, 0.2); }
 
 .user-answer-area h2, .user-input-area h2 {
-  margin-bottom: 16px; }
+  margin-bottom: 12px; }
 
 .user-answer-area {
   margin: 40px 0;
@@ -177,16 +182,20 @@ button {
     position: relative;
     width: 30vw;
     height: 30vw;
+    max-height: 300px;
+    max-width: 300px;
     background: linear-gradient(135deg, #e2e2e2, #999999);
     filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.3)); }
-    .user-answer-area .output-css-area .object {
+    .user-answer-area .output-css-area #object {
+      /*
       position: absolute;
       top: 40%;
       left: 40%;
       height: 20%;
       width: 20%;
       border-radius: 20%;
-      background-color: white; }
+      background-color: white;
+      */ }
   @media screen and (max-width: 767px) {
     .user-answer-area {
       float: none;
@@ -197,17 +206,38 @@ button {
 
 .user-input-area {
   margin: 40px 0 40px 40px; }
+  .user-input-area .code-area {
+    padding: 48px 12px;
+    border-radius: 3px;
+    background: #5f5f5f;
+    max-height: 300px;
+    min-height: 200px;
+    height: 30vw; }
+    @media screen and (max-width: 767px) {
+      .user-input-area .code-area {
+        padding: 24px 8px; } }
+    .user-input-area .code-area * {
+      color: white;
+      font-weight: 300;
+      letter-spacing: 1.5px; }
+    .user-input-area .code-area .comment {
+      color: #a1a1a1; }
+    .user-input-area .code-area .id-name {
+      color: #adb8dd; }
   .user-input-area .input-css {
     padding: 0 0 0 20px; }
     @media screen and (max-width: 767px) {
       .user-input-area .input-css {
         padding: 0 0 0 10px; } }
     .user-input-area .input-css input {
+      width: 40%;
       font-size: 12.5px;
       padding: 2px 4px;
       margin: 4px 4px;
       border: 2px solid #ddd;
-      border-radius: 3px; }
+      border-radius: 3px;
+      color: #4d4d4d;
+      font-weight: 300; }
       .user-input-area .input-css input:focus {
         border: 2px solid #1b4fd0;
         z-index: 10;
@@ -320,7 +350,10 @@ button {
     padding: 28px;
     border-radius: 8px;
     background: linear-gradient(to bottom, #e1f5e9, #dfe7f5);
-    filter: drop-shadow(4px 4px 6px rgba(99, 99, 99, 0.404)); }
+    filter: drop-shadow(5px 5px 6px rgba(99, 99, 99, 0.404));
+    transition: filter 0.3s; }
+    .game-list .game-card:hover {
+      filter: drop-shadow(2px 2px 2px rgba(99, 99, 99, 0.555)); }
   .game-list .game-card-title {
     padding-bottom: 8px;
     margin-bottom: 12px;
@@ -328,10 +361,12 @@ button {
     .game-list .game-card-title h2 {
       font-size: 22px;
       color: #2d94a1; }
+  .game-list .game-desc h3 {
+    font-size: 16px; }
   .game-list .game-desc p {
-    font-size: 14px; }
+    font-size: 12.5px; }
   .game-list .game-info {
-    font-size: 14px;
+    font-size: 12px;
     display: flex;
     flex-wrap: wrap; }
     .game-list .game-info div {
@@ -399,13 +434,15 @@ button {
       transition: 0.3s; }
       #register .input-area .input-content input::placeholder, #login .input-area .input-content input::placeholder {
         color: #cccccc; }
+      #register .input-area .input-content input:hover, #login .input-area .input-content input:hover {
+        background: #e6e6e6; }
       #register .input-area .input-content input:focus, #login .input-area .input-content input:focus {
         border: 1px solid #0099ff;
         background: white; }
     #register .input-area .input-content i, #login .input-area .input-content i {
       position: absolute;
       left: 0;
-      top: 8px;
+      top: 10px;
       padding: 9px 8px;
       color: #aaa; }
 #register .register-button, #login .register-button {
@@ -414,7 +451,11 @@ button {
   #register .register-button button, #login .register-button button {
     font-size: 24px;
     background: #55e68c;
-    padding: 6px 32px; }
+    padding: 6px 32px;
+    cursor: pointer;
+    transition: background 0.3s; }
+    #register .register-button button:hover, #login .register-button button:hover {
+      background: #00c74c; }
 #register .login-link, #login .login-link {
   margin: 20px 0 0 20px;
   text-align: right; }
@@ -470,7 +511,7 @@ button {
   border-radius: 12px;
   background: #e7e7e7; }
 #profile .profile-area .level-bar .exp-bar {
-  transition: width 0.8s ease-in-out;
+  transition: width 1s ease-in-out;
   width: 0;
   background: linear-gradient(to right, #77df33, #2fe0ba); }
 #profile .profile-area .mode-rank div {
