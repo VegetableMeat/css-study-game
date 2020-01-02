@@ -600,7 +600,7 @@ button{
         color: rgb(8, 122, 156);
         font-weight: 600;
         @include mq-down(){
-            font-size: 16px;
+            font-size: 14px;
         }
     }
     .profile-area>div{
@@ -620,12 +620,13 @@ button{
         }
         .level-bar{
             .bar-area{
+                margin: 8px 20px;
                 position: relative;
                 height: 40px;
             }
             .bar{
+                margin: 12px 0 0;
                 position: absolute;
-                margin: 8px;
                 width: 100%;
                 height: 20px;
                 border-radius: 12px;
