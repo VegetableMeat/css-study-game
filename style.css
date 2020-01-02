@@ -1,0 +1,509 @@
+@charset "UTF-8";
+/*
+    共通部分
+*/
+* {
+  margin: 0;
+  padding: 0;
+  color: #2c2c2c; }
+
+html {
+  line-height: 1.15; }
+
+body {
+  position: relative;
+  color: #2c2c2c;
+  letter-spacing: .05em;
+  background: linear-gradient(to right, #d6efff, #b5dbff);
+  font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+  font-weight: 400; }
+
+html {
+  overflow-y: scroll; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400; }
+
+p, li, dt, dl {
+  line-height: 1.6; }
+
+p {
+  margin: 0 0 1em 0;
+  line-height: 2; }
+
+li {
+  list-style-type: none; }
+
+*, *::before, *::after {
+  box-sizing: border-box; }
+
+a:link, a:visited, a:hover, a:active {
+  text-decoration: none; }
+
+header {
+  width: 100vw;
+  height: 60px;
+  padding: 12px 0;
+  text-align: center;
+  background-color: white;
+  filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.3));
+  position: relative; }
+  header .center {
+    display: flex;
+    justify-content: center; }
+  header .header-icon {
+    margin: 0 12px; }
+    header .header-icon i {
+      font-size: 36px;
+      color: #3996d6; }
+  header .header-title h1 {
+    color: #3996d6; }
+  @media screen and (max-width: 767px) {
+    header {
+      height: 46px; }
+      header .header-title h1 {
+        font-size: 20px; }
+      header .header-icon i {
+        font-size: 20px; } }
+  header .header-nav {
+    position: absolute;
+    top: 14px;
+    right: 20px;
+    display: flex; }
+    header .header-nav ul li {
+      font-size: 18px;
+      padding: 4px 12px; }
+      header .header-nav ul li .fa-user-alt {
+        color: #1b4fd0; }
+      header .header-nav ul li .fa-sign-out-alt {
+        color: gray; }
+    @media screen and (max-width: 767px) {
+      header .header-nav {
+        right: 10px;
+        top: 10px; }
+        header .header-nav ul li {
+          font-size: 14px;
+          padding: 4px 8px; } }
+
+#main-body {
+  width: 92vw;
+  max-width: 1000px;
+  min-height: 100vh;
+  margin: 40px 4vw;
+  padding: 20px 40px;
+  background-color: #f1fbff;
+  filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.3));
+  transition: filter 0.2s ease-in-out; }
+  @media screen and (min-width: 768px) {
+    #main-body {
+      margin: 40px auto; } }
+  @media screen and (max-width: 767px) {
+    #main-body {
+      padding: 20px 10px;
+      margin: 20px 2vw;
+      width: 96vw; } }
+
+button {
+  font-size: 28px;
+  padding: 4px 12px;
+  color: white;
+  background-color: skyblue;
+  border: 1px solid rgba(255, 255, 255, 0);
+  border-radius: 12px;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
+  transition: .2s ease-in-out; }
+  button:hover {
+    background-color: #3093d4; }
+  button:active {
+    background-color: #3587be;
+    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.4)); }
+
+/*
+    game.html
+*/
+.game-header {
+  margin: 40px 40px 20px;
+  border-bottom: 3px solid #3996d6;
+  padding-bottom: 12px; }
+  @media screen and (max-width: 767px) {
+    .game-header {
+      margin: 20px 20px 0; } }
+  .game-header .game-title {
+    text-align: center; }
+    .game-header .game-title h1 {
+      font-size: 28px;
+      color: #646464; }
+      @media screen and (max-width: 767px) {
+        .game-header .game-title h1 {
+          font-size: 20px; } }
+
+.start-before-area {
+  text-align: center; }
+  .start-before-area .start-button {
+    margin-top: 10vh; }
+    .start-before-area .start-button button {
+      font-size: 42px;
+      padding: 12px 28px; }
+  .start-before-area .warn-message {
+    margin-top: 20px; }
+    .start-before-area .warn-message p {
+      font-size: 16px;
+      color: #e6492e; }
+
+.game-area {
+  display: none;
+  margin-top: 40px; }
+
+.question-area {
+  display: inline-block;
+  width: 100%; }
+  .question-area .game-count {
+    text-align: right;
+    font-size: 18px; }
+    .question-area .game-count span {
+      color: #1b4fd0;
+      font-weight: 600; }
+  .question-area h2 {
+    padding-bottom: 12px;
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.2); }
+
+.user-answer-area h2, .user-input-area h2 {
+  margin-bottom: 16px; }
+
+.user-answer-area {
+  margin: 40px 0;
+  float: left; }
+  .user-answer-area .output-css-area {
+    position: relative;
+    width: 30vw;
+    height: 30vw;
+    background: linear-gradient(135deg, #e2e2e2, #999999);
+    filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.3)); }
+    .user-answer-area .output-css-area .object {
+      position: absolute;
+      top: 40%;
+      left: 40%;
+      height: 20%;
+      width: 20%;
+      border-radius: 20%;
+      background-color: white; }
+  @media screen and (max-width: 767px) {
+    .user-answer-area {
+      float: none;
+      margin: 20px 0; }
+      .user-answer-area .output-css-area {
+        width: calc(100vw - 4vw - 20px);
+        height: calc(100vw - 4vw - 20px); } }
+
+.user-input-area {
+  margin: 40px 0 40px 40px; }
+  .user-input-area .input-css {
+    padding: 0 0 0 20px; }
+    @media screen and (max-width: 767px) {
+      .user-input-area .input-css {
+        padding: 0 0 0 10px; } }
+    .user-input-area .input-css input {
+      font-size: 12.5px;
+      padding: 2px 4px;
+      margin: 4px 4px;
+      border: 2px solid #ddd;
+      border-radius: 3px; }
+      .user-input-area .input-css input:focus {
+        border: 2px solid #1b4fd0;
+        z-index: 10;
+        outline: 0; }
+
+.run-button {
+  text-align: right;
+  margin-top: 20px; }
+  .run-button button {
+    font-size: 24px;
+    padding: 4px 48px; }
+
+.error-message {
+  margin: 40px 0 40px 40px; }
+  .error-message h3, .error-message p {
+    color: #e6492e; }
+  .error-message h3 {
+    display: inline;
+    padding-bottom: 4px;
+    font-size: 24px;
+    border-bottom: 3px double red; }
+  .error-message p {
+    margin-top: 8px;
+    font-size: 16px; }
+
+.user-input-area, .error-message {
+  display: inline-block;
+  width: calc(100% - 30vw - 40px); }
+  @media screen and (max-width: 767px) {
+    .user-input-area, .error-message {
+      margin: 20px 0 0;
+      width: 100%; } }
+
+.modal, .modal-result {
+  display: none;
+  position: fixed;
+  top: 38vh;
+  left: 0;
+  width: 100vw;
+  padding: 40px;
+  box-shadow: #2c2c2c; }
+  @media screen and (max-width: 767px) {
+    .modal, .modal-result {
+      top: 32vh; } }
+
+.clear-message, .next-button {
+  text-align: center;
+  margin: 0 0 20px; }
+
+.clear-message, .result-message {
+  clear: both;
+  position: relative;
+  padding: 12px 20px;
+  border-bottom: solid 2px #3996d6;
+  border-top: solid 2px #3996d6; }
+  .clear-message h3, .result-message h3 {
+    display: inline;
+    color: #3996d6;
+    font-weight: 600;
+    font-size: 32px; }
+    @media screen and (max-width: 767px) {
+      .clear-message h3, .result-message h3 {
+        font-size: 24px; } }
+
+.next-button button, .finish-button button {
+  padding: 16px 48px;
+  border: 0;
+  background: linear-gradient(to bottom, #00ffbf, #3996d6); }
+
+.modal-result {
+  text-align: center;
+  top: 18vh; }
+  .modal-result .result-time {
+    margin: 12px 0;
+    padding: 12px; }
+    .modal-result .result-time span {
+      color: #707070;
+      padding: 12px;
+      font-size: 22px;
+      border-top: solid 1px #3996d6;
+      border-bottom: solid 1px #3996d6;
+      box-shadow: #2c2c2c; }
+      @media screen and (max-width: 767px) {
+        .modal-result .result-time span {
+          font-size: 16px; } }
+  .modal-result .result-rank {
+    padding: 24px 0 32px; }
+    .modal-result .result-rank span {
+      font-size: 28px; }
+    .modal-result .result-rank .rank {
+      color: red; }
+  .modal-result .finish-button button {
+    padding: 8px 24px; }
+
+/*
+    front.html
+*/
+.game-list {
+  margin: 40px; }
+  .game-list * {
+    color: #858585; }
+  .game-list .game-card.easy-mode {
+    background: linear-gradient(to bottom, #f7f7db, #d7f5eb); }
+  .game-list .game-card.normal-mode {
+    background: linear-gradient(to bottom, #d9f2f7, #d4dbf3); }
+  .game-list .game-card.hard-mode {
+    background: linear-gradient(to bottom, #e8d8f5, #eecfd1); }
+  .game-list .game-card {
+    margin-bottom: 24px;
+    padding: 28px;
+    border-radius: 8px;
+    background: linear-gradient(to bottom, #e1f5e9, #dfe7f5);
+    filter: drop-shadow(4px 4px 6px rgba(99, 99, 99, 0.404)); }
+  .game-list .game-card-title {
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    border-bottom: solid 1.5px rgba(68, 68, 68, 0.5); }
+    .game-list .game-card-title h2 {
+      font-size: 22px;
+      color: #2d94a1; }
+  .game-list .game-desc p {
+    font-size: 14px; }
+  .game-list .game-info {
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap; }
+    .game-list .game-info div {
+      display: inline;
+      padding: 6px;
+      margin-right: 12px; }
+
+/*
+    register.html login.html
+*/
+#register header, #login header {
+  margin-top: 10vh;
+  background-color: rgba(0, 0, 0, 0);
+  filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0)); }
+  #register header i, #register header h1, #login header i, #login header h1 {
+    font-size: 36px; }
+    @media screen and (max-width: 767px) {
+      #register header i, #register header h1, #login header i, #login header h1 {
+        font-size: 28px; } }
+  #register header i, #login header i {
+    margin-top: 4px; }
+#register #main-body, #login #main-body {
+  max-width: 600px;
+  margin: 40px auto 20px;
+  min-height: 100px;
+  padding: 50px 20px;
+  background-color: white; }
+  @media screen and (max-width: 767px) {
+    #register #main-body, #login #main-body {
+      width: 80vw;
+      max-width: 450px; } }
+#register .input-area-header, #login .input-area-header {
+  margin: 0 20px 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.185); }
+  #register .input-area-header h2, #login .input-area-header h2 {
+    font-size: 26px;
+    color: #858585; }
+    @media screen and (max-width: 767px) {
+      #register .input-area-header h2, #login .input-area-header h2 {
+        font-size: 22px; } }
+#register .input-area, #login .input-area {
+  margin: 20px 0; }
+  #register .input-area .input-item, #login .input-area .input-item {
+    padding: 8px 20px; }
+  #register .input-area .input-label, #login .input-area .input-label {
+    font-size: 18px;
+    color: #868686; }
+    @media screen and (max-width: 767px) {
+      #register .input-area .input-label, #login .input-area .input-label {
+        font-size: 14px; } }
+  #register .input-area .input-content, #login .input-area .input-content {
+    position: relative; }
+    #register .input-area .input-content input, #login .input-area .input-content input {
+      background: #f3f3f3;
+      font-size: 18px;
+      width: 100%;
+      border: 1px solid white;
+      border-radius: 4px;
+      margin: 8px 0;
+      outline: none;
+      padding: 8px 8px 8px 40px;
+      box-sizing: border-box;
+      transition: 0.3s; }
+      #register .input-area .input-content input::placeholder, #login .input-area .input-content input::placeholder {
+        color: #cccccc; }
+      #register .input-area .input-content input:focus, #login .input-area .input-content input:focus {
+        border: 1px solid #0099ff;
+        background: white; }
+    #register .input-area .input-content i, #login .input-area .input-content i {
+      position: absolute;
+      left: 0;
+      top: 8px;
+      padding: 9px 8px;
+      color: #aaa; }
+#register .register-button, #login .register-button {
+  text-align: center;
+  margin: 0 20px; }
+  #register .register-button button, #login .register-button button {
+    font-size: 24px;
+    background: #55e68c;
+    padding: 6px 32px; }
+#register .login-link, #login .login-link {
+  margin: 20px 0 0 20px;
+  text-align: right; }
+  #register .login-link a, #login .login-link a {
+    color: #1d66aa;
+    transition: color 0.2s; }
+    #register .login-link a:hover, #login .login-link a:hover {
+      color: #144572; }
+
+/*
+    profile.html
+*/
+#profile #main-body {
+  max-width: 800px;
+  margin: 40px auto 20px;
+  min-height: 100px;
+  padding: 40px 80px;
+  background-color: white; }
+  @media screen and (max-width: 767px) {
+    #profile #main-body {
+      width: 80vw;
+      max-width: 450px;
+      padding: 20px; } }
+#profile .label {
+  padding: 4px 12px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.295);
+  font-size: 22px;
+  color: #087a9c;
+  font-weight: 600; }
+  @media screen and (max-width: 767px) {
+    #profile .label {
+      font-size: 16px; } }
+#profile .profile-area > div {
+  margin: 24px 0; }
+#profile .profile-area p, #profile .profile-area span {
+  color: #7e7e7e;
+  font-size: 18px; }
+  @media screen and (max-width: 767px) {
+    #profile .profile-area p, #profile .profile-area span {
+      font-size: 12px; } }
+#profile .profile-area p {
+  padding: 4px 12px;
+  margin-bottom: 0; }
+#profile .profile-area .level-bar .bar-area {
+  position: relative;
+  height: 40px; }
+#profile .profile-area .level-bar .bar {
+  position: absolute;
+  margin: 8px;
+  width: 100%;
+  height: 20px;
+  border-radius: 12px;
+  background: #e7e7e7; }
+#profile .profile-area .level-bar .exp-bar {
+  transition: width 0.8s ease-in-out;
+  width: 0;
+  background: linear-gradient(to right, #77df33, #2fe0ba); }
+#profile .profile-area .mode-rank div {
+  margin: 4px 0; }
+#profile .history-area .time-select {
+  margin: 20px;
+  text-align: right;
+  font-size: 18px; }
+  #profile .history-area .time-select select {
+    font-size: 18px; }
+  @media screen and (max-width: 767px) {
+    #profile .history-area .time-select {
+      font-size: 14px; }
+      #profile .history-area .time-select select {
+        font-size: 14px; } }
+#profile .history-area .history-list .history-card > div {
+  padding: 4px;
+  margin: 8px 12px;
+  border-bottom: solid 1px #dbdbdb; }
+#profile .history-area .history-list .history-card > div, #profile .history-area .history-list span {
+  font-size: 14px;
+  color: #6e6e6e; }
+  @media screen and (max-width: 767px) {
+    #profile .history-area .history-list .history-card > div, #profile .history-area .history-list span {
+      font-size: 10px; } }
+#profile .history-area .history-list .history-card {
+  padding: 12px 20px;
+  margin: 0 12px 20px;
+  border-radius: 8px;
+  background: linear-gradient(to right, #e2f7ff, #f3e8ff);
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.281)); }
+  @media screen and (max-width: 767px) {
+    #profile .history-area .history-list .history-card {
+      padding: 8px;
+      margin: 0 4px 12px; } }
+
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS Study Game</title>
+    <link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+</head>
+<body id="profile">
+    <header>
+        <div class="center">
+            <div class="header-icon">
+                <i class="fab fa-css3-alt"></i>
+            </div>
+            <div class="header-title">
+                <h1>CSS Study Game</h1>
+            </div>
+        </div>
+        <nav class="header-nav">
+            <ul>
+                <li><a href="profile.html"><i class="text-primary fas fa-user-alt"></i></a></li>
+            </ul>
+            <ul>
+                <li><a href=""><i class="fas fa-sign-out-alt"></i></a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="game-header">
+        <div class="game-title">
+            <h1>プロフィール</h1>
+        </div>
+    </div>
+    <div id="main-body">
+        <div class="profile-area">
+            <div class="user-id">
+                <div class="label">ユーザーID</div>
+                <p><span>unko123</span></p>
+            </div>
+            <div class="status">
+                <div class="label">称号</div>
+                <p><span>ビギナー</span></p>
+            </div>
+            <div class="level-area">
+                <div class="level">
+                    <div class="label">現在のレベル</div>
+                    <p><span>12</span></p>
+                </div>
+                <div class="level-bar">
+                    <div class="bar-area">
+                        <div class="base-bar bar"></div>
+                        <div class="exp-bar bar"></div>
+                    </div>
+                    <p>合計獲得経験値 : <span>1280</span></p>
+                    <p>次のレベルまでの経験値 : <span>720</span></p>
+                </div>
+            </div>
+            <div class="mode-rank">
+                <div class="label">ゲームモードごとの過去最高ランク</div>
+                <div class="easy-mode">
+                    <p>初級編 : <span>A</span></p>
+                </div>
+                <div class="normal-mode">
+                    <p>中級編 : <span>B</span></p>
+                </div>
+                <div class="hard-mode">
+                    <p>上級編 : <span>D</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="history-area">
+            <div class="label">プレイ履歴</div>
+            <div class="time-select">
+                表示期間
+                <select name="period" id="period-menu">
+                    <option value="1">今日</option>
+                    <option value="2">今週</option>
+                    <option value="3" selected>今月</option>
+                    <option value="4">今年</option>
+                    <option value="5">全期間</option>
+                </select>
+            </div>
+            <div class="history-list">
+                <div class="history-card">
+                    <div class="play-time">
+                        プレイ日時　:  <span>2019年12月31日</span>
+                    </div>
+                    <div class="play-mode">
+                        ゲームモード:  <span>中級編</span>
+                    </div>
+                    <div class="goal-time">
+                        クリアタイム:  <span>5分24秒</span>
+                    </div>
+                    <div class="rank">
+                        ランク　　　:  <span>A</span>
+                    </div>
+                    <div class="exp-points">
+                        獲得経験値　:  <span>82</span>
+                    </div>
+                </div>
+                <div class="history-card">
+                    <div class="play-time">
+                        プレイ日時 : <span>2019年12月31日</span>
+                    </div>
+                    <div class="play-mode">
+                        ゲームモード : <span>中級編</span>
+                    </div>
+                    <div class="goal-time">
+                        クリアタイム : <span>5分24秒</span>
+                    </div>
+                    <div class="rank">
+                        ランク : <span>A</span>
+                    </div>
+                    <div class="exp-points">
+                        獲得経験値 : <span>82</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>
