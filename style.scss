@@ -18,7 +18,7 @@ body {
     color: #2c2c2c;
     letter-spacing: .05em;
     background: linear-gradient(to right, #c1e3ff, #a3f8ea);
-    font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+    font-family:"游ゴシック Medium",YuGothic,YuGothicM,"Hiragino Kaku Gothic ProN","Hiragino Kaku Gothic Pro",メイリオ,Meiryo,sans-serif;
     font-weight: 400;
 }
 html {
@@ -289,14 +289,53 @@ button{
 .user-input-area{
     margin: 40px 0 40px 40px;
     .code-area{
+        position: relative;
         padding: 48px 12px;
-        border-radius: 3px;
+        border-radius: 8px 8px 2px 2px;
         background: rgb(95, 95, 95);
         max-height: 300px;
         min-height: 200px;
         height: 30vw;
         @include mq-down(){
-            padding: 24px 8px;
+            padding: 32px 8px;
+        }
+        .code-area-header{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 28px;
+            border-radius: 8px 8px 0 0;
+            background-color: rgb(53, 53, 53);
+        }
+        .css-tab{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 28px;
+            border-radius: 8px 8px 0 0;
+            background-color: rgb(75, 75, 75);
+        }
+        .file-name, .sharp{
+            position: absolute;
+            top: 8px;
+            left: 30px;
+            font-size: 12px;
+            color: white;
+        }
+        .sharp{
+            color: $main-color;
+            font-weight: 900;
+            left: 16px;
+            font-size: 14px;
+        }
+        i{
+            position: absolute;
+            top: 6px;
+            right: 12px;
+            font-size: 18px;
+            font-weight: 900;
         }
         *{
             color: white;
@@ -497,17 +536,23 @@ button{
             font-size: 16px;
         }
         p{
-            font-size: 12.5px;
+            font-size: 13px;
         }
     }
     .game-info{
         font-size: 12px;
         display: flex;
         flex-wrap:wrap;
+        flex-direction: row-reverse;
         div{
             display: inline;
-            padding: 6px;
-            margin-right: 12px;
+            margin: 0 16px 0 0;
+            padding: 4px 12px;
+            border-bottom: 1px solid rgb(179, 179, 179);
+            color: rgb(128, 128, 128);
+            span{
+                color: rgb(128, 128, 128);
+            }
         }
     }
 }
