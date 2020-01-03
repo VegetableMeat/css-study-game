@@ -274,7 +274,7 @@ button {
     position: relative;
     padding: 48px 12px;
     border-radius: 8px 8px 2px 2px;
-    background: #5f5f5f;
+    background: dimgray;
     max-height: 328px;
     min-height: 200px;
     height: calc(30vw + 42px); }
@@ -290,15 +290,23 @@ button {
       height: 28px;
       border-radius: 8px 8px 0 0;
       background-color: #353535; }
-    .user-input-area .code-area .css-tab {
+    .user-input-area .code-area .css-tab, .user-input-area .code-area .html-tab {
+      z-index: 1;
       position: absolute;
       top: 0;
       left: 0;
       width: 140px;
       height: 28px;
       border-radius: 8px 8px 0 0;
-      background-color: #4b4b4b; }
+      transition: 0.2s ease-in-out; }
+    .user-input-area .code-area .css-tab {
+      background-color: #5a5a5a; }
+    .user-input-area .code-area .html-tab {
+      background-color: #464646; }
+      .user-input-area .code-area .html-tab span {
+        opacity: 0.5; }
     .user-input-area .code-area .file-name, .user-input-area .code-area .sharp {
+      z-index: 2;
       position: absolute;
       top: 8px;
       left: 30px;
@@ -309,6 +317,17 @@ button {
       font-weight: 900;
       left: 16px;
       font-size: 14px; }
+    .user-input-area .code-area .code-area-header.html-code .html-tab {
+      position: relative;
+      left: 145px; }
+    .user-input-area .code-area .code-area-header.html-code .tag {
+      position: absolute;
+      left: 6px;
+      top: 6px;
+      font-size: 14px;
+      font-weight: bold;
+      color: orange;
+      transform: scaleX(0.6); }
     .user-input-area .code-area i {
       position: absolute;
       top: 6px;
@@ -323,6 +342,15 @@ button {
       color: #a1a1a1; }
     .user-input-area .code-area .id-name {
       color: #adb8dd; }
+  .user-input-area .css, .user-input-area .html {
+    transition: 0.3s ease-in-out; }
+  .user-input-area .html {
+    position: absolute;
+    display: none; }
+    .user-input-area .html .red {
+      color: #fc766d; }
+    .user-input-area .html .yellow {
+      color: #f0b850; }
   .user-input-area .input-css {
     padding: 0 0 0 20px; }
     @media screen and (max-width: 767px) {

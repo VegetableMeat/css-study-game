@@ -373,7 +373,7 @@ button{
         position: relative;
         padding: 48px 12px;
         border-radius: 8px 8px 2px 2px;
-        background: rgb(95, 95, 95);
+        background: rgb(105, 105, 105);
         max-height: 328px;
         min-height: 200px;
         height: calc(30vw + 42px);
@@ -390,16 +390,27 @@ button{
             border-radius: 8px 8px 0 0;
             background-color: rgb(53, 53, 53);
         }
-        .css-tab{
+        .css-tab, .html-tab{
+            z-index: 1;
             position: absolute;
             top: 0;
             left: 0;
             width: 140px;
             height: 28px;
             border-radius: 8px 8px 0 0;
-            background-color: rgb(75, 75, 75);
+            transition: 0.2s ease-in-out;
+        }
+        .css-tab{
+            background-color: rgb(90, 90, 90);
+        }
+        .html-tab{
+            background-color: rgb(70, 70, 70);
+            span{
+                opacity: 0.5;
+            }
         }
         .file-name, .sharp{
+            z-index: 2;
             position: absolute;
             top: 8px;
             left: 30px;
@@ -411,6 +422,21 @@ button{
             font-weight: 900;
             left: 16px;
             font-size: 14px;
+        }
+        .code-area-header.html-code{
+            .html-tab{
+                position: relative;
+                left: 145px;
+            }
+            .tag{
+                position: absolute;
+                left: 6px;
+                top: 6px;
+                font-size: 14px;
+                font-weight: bold;
+                color: orange;
+                transform: scaleX(0.6);
+            }
         }
         i{
             position: absolute;
@@ -429,6 +455,19 @@ button{
         }
         .id-name{
             color: rgb(173, 184, 221);
+        }
+    }
+    .css, .html{
+        transition: 0.3s ease-in-out;
+    }
+    .html{
+        position: absolute;
+        display: none;
+        .red{
+            color: rgb(252, 118, 109);
+        }
+        .yellow{
+            color: rgb(240, 184, 80);
         }
     }
     .input-css{

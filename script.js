@@ -37,6 +37,23 @@ $(function(){
         $("#main-body").css("filter", "none");
     });
 
+    $(".html-tab").click(function(){
+        $(".html-tab").css("background-color", "rgb(90, 90, 90)");
+        $(".css-tab").css("background-color", "rgb(70, 70, 70)");
+        $(".html-tab span").css("opacity", "1");
+        $(".css-tab span").css("opacity", "0.5");
+        $(".code-area .html").css("display", "block");
+        $(".code-area .css").css("display", "none");
+    });
+    $(".css-tab").click(function(){
+        $(".css-tab").css("background-color", "rgb(90, 90, 90)");
+        $(".html-tab").css("background-color", "rgb(70, 70, 70)");
+        $(".css-tab span").css("opacity", "1");
+        $(".html-tab span").css("opacity", "0.5");
+        $(".code-area .html").css("display", "none");
+        $(".code-area .css").css("display", "block");
+    });
+
     //１レベルごとに必要な経験値
     const levelUpExp = 1000;
     //合計獲得経験値（仮データ）
