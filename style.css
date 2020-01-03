@@ -314,12 +314,11 @@ button {
     margin: 12px 0;
     padding: 12px; }
     .modal-result .result-time span {
-      color: #707070;
+      color: black;
       padding: 12px;
       font-size: 22px;
       border-top: solid 1px #3996d6;
-      border-bottom: solid 1px #3996d6;
-      box-shadow: #2c2c2c; }
+      border-bottom: solid 1px #3996d6; }
       @media screen and (max-width: 767px) {
         .modal-result .result-time span {
           font-size: 16px; } }
@@ -499,19 +498,21 @@ button {
 #profile .profile-area p {
   padding: 4px 12px;
   margin-bottom: 0; }
+#profile .profile-area .level-bar .level {
+  line-height: 1;
+  margin-top: 12px; }
 #profile .profile-area .level-bar .bar-area {
   margin: 8px 20px;
   position: relative;
-  height: 40px; }
+  height: 30px; }
 #profile .profile-area .level-bar .bar {
-  margin: 12px 0 0;
   position: absolute;
   width: 100%;
   height: 20px;
   border-radius: 12px;
   background: #e7e7e7; }
 #profile .profile-area .level-bar .exp-bar {
-  transition: width 1s ease-in-out;
+  transition: width 1.5s ease-in-out;
   width: 0;
   background: linear-gradient(to right, #77df33, #2fe0ba); }
 #profile .profile-area .mode-rank div {
