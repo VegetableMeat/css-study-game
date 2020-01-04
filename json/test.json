@@ -6,7 +6,7 @@
         "default": {
           "border-color":"transparent transparent #000 transparent"
         },
-        "parameter": [ "border-width" ],
+        "property": [ "border-width" ],
         "regular": {
           "border-width": "^([0-9]+px) ([0-9]+px) ([0-9]+px) ([0-9]+px)$"
         }
@@ -17,7 +17,7 @@
           "border-color":"#000",
           "background":"#000"
         },
-        "parameter": [ "width", "height" ],
+        "property": [ "width", "height" ],
         "regular": {
           "width": "^([0-9]+px)$",
           "height": "^([0-9]+px)$"
@@ -29,7 +29,7 @@
           "border-color":"#000",
           "background":"#000"
         },
-        "parameter": [ "width", "height", "border-radius" ],
+        "property": [ "width", "height", "border-radius" ],
         "regular": {
           "width": "^([0-9]+px)$",
           "height": "^([0-9]+px)$",
