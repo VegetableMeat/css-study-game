@@ -277,11 +277,15 @@ button {
     background: dimgray;
     max-height: 328px;
     min-height: 200px;
-    height: calc(30vw + 42px); }
+    height: calc(30vw + 42px);
+    width: 50vw;
+    max-width: 570px; }
     @media screen and (max-width: 767px) {
       .user-input-area .code-area {
         padding: 32px 8px;
-        max-height: 600px; } }
+        max-height: 600px;
+        width: 90vw;
+        max-width: 700px; } }
     .user-input-area .code-area .code-area-header {
       position: absolute;
       top: 0;
@@ -393,11 +397,11 @@ button {
     margin-top: 8px;
     font-size: 16px; }
 
-.user-input-area, .error-message {
+.user-input-area {
   display: inline-block;
   width: calc(100% - 30vw - 40px); }
   @media screen and (max-width: 767px) {
-    .user-input-area, .error-message {
+    .user-input-area {
       margin: 20px 0 0;
       width: 100%; } }
 
@@ -530,7 +534,8 @@ button {
   background-color: white; }
   @media screen and (max-width: 767px) {
     #register #main-body, #login #main-body {
-      width: 80vw;
+      padding: 40px 12px;
+      width: 90vw;
       max-width: 450px; } }
 #register .input-area-header, #login .input-area-header {
   margin: 0 20px 12px;
