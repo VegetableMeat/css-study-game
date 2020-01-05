@@ -579,6 +579,7 @@ button{
 }
 
 .modal-result{
+    display: block;
     text-align: center;
     top: 18vh;
     .result-time{
@@ -602,6 +603,41 @@ button{
         }
         .rank{
             color: red;
+        }
+    }
+    .level-bar{
+        .level{
+            line-height: 1;
+            margin-top: 10px;
+            font-size: 22px;
+        }
+        .bar-area{
+            margin: 8px 20px;
+            position: relative;
+            height: 30px;
+        }
+        .bar{
+            position: absolute;
+            width: 100%;
+            height: 20px;
+            border-radius: 12px;
+            background: rgb(231, 231, 231);
+        }
+        .exp-bar{
+            min-width: 20px;
+            transition: width 1.5s ease-in-out;
+            width: 0;
+            background: linear-gradient(to right, rgb(119, 223, 51), rgb(47, 224, 186));
+        }
+        .level-up-message{
+            opacity: 0;
+            transform: translateY(-120px);
+            font-size: 52px;
+            transition: 0.6s ease-in-out;
+            span{
+                color: rgb(233, 233, 59);
+                filter: drop-shadow(3px 2px 2px rgb(44, 44, 44));
+            }
         }
     }
     .finish-button{
@@ -765,7 +801,7 @@ button{
             }
         }
     }
-    .register-button{
+    .register-button, .login-button{
         text-align: center;
         margin: 0 20px;
         button{
@@ -779,7 +815,7 @@ button{
             }
         }
     }
-    .login-link{
+    .login-link, .register-link{
         margin: 20px 0 0 20px;
         text-align: right;
         a{
@@ -851,6 +887,7 @@ button{
                 background: rgb(231, 231, 231);
             }
             .exp-bar{
+                min-width: 20px;
                 transition: width 1.5s ease-in-out;
                 width: 0;
                 background: linear-gradient(to right, rgb(119, 223, 51), rgb(47, 224, 186));

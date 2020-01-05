@@ -9,7 +9,7 @@
     <link href="style.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 </head>
-<body>
+<body id="game">
     <header>
         <div class="center">
             <div class="header-icon">
@@ -148,6 +148,20 @@
         </div>
         <div class="result-rank">
             <span>Rank : <span class="rank">B</span></span>
+        </div>
+        <div class="level-area">
+            <div class="level-bar">
+                <p class="level">Lv. <span>12</span></p>
+                <div class="bar-area">
+                    <div class="base-bar bar"></div>
+                    <div class="exp-bar bar"></div>
+                </div>
+                <div class="level-up-message">
+                    <span>LEVEL UP!</span>
+                </div>
+                <p>合計獲得経験値 : <span>1280</span></p>
+                <p>次のレベルまでの経験値 : <span>720</span></p>
+            </div>
         </div>
         <div class="finish-button">
             <a href="front.html"><button onfocus="this.blur();">トップ画面へ戻る</button></a>
