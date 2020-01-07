@@ -68,18 +68,19 @@ header {
   header .header-nav {
     position: absolute;
     top: 14px;
-    right: 20px;
-    display: flex; }
-    header .header-nav ul li {
-      font-size: 18px;
-      padding: 4px 12px;
-      transition: transform 0.2s; }
-      header .header-nav ul li .fa-user-alt {
-        color: #3996d6; }
-      header .header-nav ul li .fa-sign-out-alt {
-        color: #a7a7a7; }
-      header .header-nav ul li:hover {
-        transform: scale(1.4); }
+    right: 20px; }
+    header .header-nav ul {
+      display: flex; }
+      header .header-nav ul li {
+        font-size: 18px;
+        padding: 4px 12px;
+        transition: transform 0.2s; }
+        header .header-nav ul li .fa-user-alt {
+          color: #3996d6; }
+        header .header-nav ul li .fa-sign-out-alt {
+          color: #a7a7a7; }
+        header .header-nav ul li:hover {
+          transform: scale(1.4); }
     @media screen and (max-width: 767px) {
       header .header-nav {
         right: 10px;
@@ -444,7 +445,10 @@ button {
 .modal-result {
   display: none;
   text-align: center;
-  top: 8vh; }
+  top: 60px; }
+  @media screen and (max-width: 767px) {
+    .modal-result {
+      top: 10px; } }
   .modal-result .result-time {
     margin: 12px 0;
     padding: 12px; }

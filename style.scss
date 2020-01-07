@@ -114,8 +114,8 @@ header{
         position: absolute;
         top: 14px;
         right: 20px;
-        display: flex;
         ul{
+            display: flex;
             li{
                 font-size: 18px;
                 padding: 4px 12px;
@@ -581,7 +581,10 @@ button{
 .modal-result{
     display: none;
     text-align: center;
-    top: 8vh;
+    top: 60px;
+    @include mq-down(){
+        top: 10px;
+    }
     .result-time{
         margin: 12px 0;
         padding: 12px;
