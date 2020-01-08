@@ -1,0 +1,75 @@
+{
+  "class": [
+    [
+      {
+        "type": "三角形",
+        "default": { "border-color":"transparent transparent #fff transparent" },
+        "property": [ "border-width" ]
+      },
+      {
+        "type": "四角形",
+        "default": { "border-color":"#fff", "background":"#fff" },
+        "property": [ "width", "height" ]
+      },
+      {
+        "type": "円",
+        "default": { "border-color":"#fff", "background":"#fff" },
+        "property": [ "width", "height", "border-radius" ]
+      }
+    ],
+    [
+      {
+        "type": "三角形",
+        "property": [ "border-width", "border-color" ]
+      },
+      {
+        "type": "四角形",
+        "property": [ "width", "height", "background-color" ]
+      },
+      {
+        "type": "円",
+        "property": [ "width", "height", "border-radius", "background-color" ]
+      }
+    ],
+    [
+      {
+        "type": "三角形",
+        "property": [ "border-width", "border-color" ]
+      },
+      {
+        "type": "四角形",
+        "property": [ "width", "height", "background-color" ]
+      },
+      {
+        "type": "円",
+        "property": [ "width", "height", "border-radius", "background-color" ]
+      }
+    ]
+  ],
+  "config": {
+    "regular": {
+      "width": "^([0-9]+px)$",
+      "height": "^([0-9]+px)$",
+      "border-width": "^([0-9]+px) ([0-9]+px) ([0-9]+px) ([0-9]+px)$",
+      "border-radius": "^([1-9]|[1-9][0-9]|100)%$",
+      "opacity": "^(0?.[1-9]|1(.0)?)$",
+      "border-color": "^#((0|f|F){3}|(00|ff|FF|fF|Ff){3})$",
+      "background-color": "^#((0|f|F){3}|(00|ff|FF|fF|Ff){3})$",
+      "filter": "^(drop-shadow)[(](([1-9]|10)px) (([1-9]|10)px)[)]$"
+    },
+    "color": {
+      "#000": "黒色",
+      "#00f": "青色",
+      "#0f0": "緑色",
+      "#0ff": "シアン",
+      "#f00": "赤色",
+      "#f0f": "マゼンタ",
+      "#ff0": "黄色",
+      "#fff": "白色"
+    },
+    "sub-property": [
+      [ "opacity", "filter" ],
+      [ "transform", "background" ]
+    ]
+  }
+}
