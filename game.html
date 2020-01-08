@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script>
+        window.onbeforeunload = function(e) {
+            e.returnValue = "ページを離れようとしています。よろしいですか？";
+        }
+    </script>
     <title>CSS Study Game</title>
     <link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
@@ -16,7 +21,7 @@
             <div class="header-icon">
                 <i class="fab fa-css3-alt"></i>
             </div>
-            <a href="front.html">
+            <a href="front.html" onclick="window.onbeforeunload = null;">
                 <div class="header-title">
                     <h1>CSS Study Game</h1>
                 </div>
@@ -24,8 +29,8 @@
         </div>
         <nav class="header-nav">
             <ul>
-                <li class="profile"><a href="profile.html"><i class="text-primary fas fa-user-alt"></i></a></li>
-                <li class="exit"><a href=""><i class="fas fa-sign-out-alt"></i></a></li>
+                <li class="profile"><a href="profile.html" onclick="window.onbeforeunload = null;"><i class="text-primary fas fa-user-alt"></i></a></li>
+                <li class="exit"><a href="" onclick="window.onbeforeunload = null;"><i class="fas fa-sign-out-alt"></i></a></li>
             </ul>
         </nav>
     </header>
@@ -164,7 +169,7 @@
             </div>
         </div>
         <div class="finish-button">
-            <a href="front.html"><button onfocus="this.blur();">トップ画面へ戻る</button></a>
+            <a href="front.html"><button onfocus="this.blur();" onclick="window.onbeforeunload = null;">トップ画面へ戻る</button></a>
         </div>
     </div>
     <footer>
