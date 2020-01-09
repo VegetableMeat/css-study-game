@@ -7,9 +7,10 @@
     <title>CSS Study Game</title>
     <link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 </head>
-<body>
+<body id="game">
     <header>
         <div class="center">
             <div class="header-icon">
@@ -23,10 +24,8 @@
         </div>
         <nav class="header-nav">
             <ul>
-                <li><a href="profile.html"><i class="text-primary fas fa-user-alt"></i></a></li>
-            </ul>
-            <ul>
-                <li><a href=""><i class="fas fa-sign-out-alt"></i></a></li>
+                <li class="profile"><a href="profile.html"><i class="text-primary fas fa-user-alt"></i></a></li>
+                <li class="exit"><a href=""><i class="fas fa-sign-out-alt"></i></a></li>
             </ul>
         </nav>
     </header>
@@ -148,6 +147,21 @@
         </div>
         <div class="result-rank">
             <span>Rank : <span class="rank">B</span></span>
+        </div>
+        <div class="level-area">
+            <div class="level-bar">
+                <p class="level">Lv. <span>12</span></p>
+                <div class="bar-area">
+                    <div class="base-bar bar"></div>
+                    <div class="exp-bar bar"></div>
+                </div>
+                <div class="level-up-message">
+                    <span>LEVEL UP!</span>
+                </div>
+                <p class="get-exp">獲得経験値 : <span></span></p>
+                <p class="total-exp">合計獲得経験値 : <span></span></p>
+                <p class="next-exp">次のレベルまでの経験値 : <span></span></p>
+            </div>
         </div>
         <div class="finish-button">
             <a href="front.html"><button onfocus="this.blur();">トップ画面へ戻る</button></a>

@@ -68,18 +68,19 @@ header {
   header .header-nav {
     position: absolute;
     top: 14px;
-    right: 20px;
-    display: flex; }
-    header .header-nav ul li {
-      font-size: 18px;
-      padding: 4px 12px;
-      transition: transform 0.2s; }
-      header .header-nav ul li .fa-user-alt {
-        color: #3996d6; }
-      header .header-nav ul li .fa-sign-out-alt {
-        color: #a7a7a7; }
-      header .header-nav ul li:hover {
-        transform: scale(1.4); }
+    right: 20px; }
+    header .header-nav ul {
+      display: flex; }
+      header .header-nav ul li {
+        font-size: 18px;
+        padding: 4px 12px;
+        transition: transform 0.2s; }
+        header .header-nav ul li .fa-user-alt {
+          color: #3996d6; }
+        header .header-nav ul li .fa-sign-out-alt {
+          color: #a7a7a7; }
+        header .header-nav ul li:hover {
+          transform: scale(1.4); }
     @media screen and (max-width: 767px) {
       header .header-nav {
         right: 10px;
@@ -442,8 +443,12 @@ button {
   background: linear-gradient(to bottom, #00ffbf, #3996d6); }
 
 .modal-result {
+  display: none;
   text-align: center;
-  top: 18vh; }
+  top: 60px; }
+  @media screen and (max-width: 767px) {
+    .modal-result {
+      top: 10px; } }
   .modal-result .result-time {
     margin: 12px 0;
     padding: 12px; }
@@ -462,6 +467,33 @@ button {
       font-size: 28px; }
     .modal-result .result-rank .rank {
       color: red; }
+  .modal-result .level-bar .level {
+    line-height: 1;
+    margin-top: 10px;
+    font-size: 22px; }
+  .modal-result .level-bar .bar-area {
+    margin: 8px 20px;
+    position: relative;
+    height: 30px; }
+  .modal-result .level-bar .bar {
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    border-radius: 12px;
+    background: #e7e7e7; }
+  .modal-result .level-bar .exp-bar {
+    min-width: 20px;
+    transition: width 1.5s ease-in-out;
+    width: 0;
+    background: linear-gradient(to right, #77df33, #2fe0ba); }
+  .modal-result .level-bar .level-up-message {
+    opacity: 0;
+    transform: translateY(-120px);
+    font-size: 52px;
+    transition: 0.6s ease-in-out; }
+    .modal-result .level-bar .level-up-message span {
+      color: #e9e93b;
+      filter: drop-shadow(3px 2px 2px #2c2c2c); }
   .modal-result .finish-button button {
     padding: 8px 24px; }
 
@@ -584,24 +616,24 @@ button {
       top: 10px;
       padding: 9px 8px;
       color: #aaa; }
-#register .register-button, #login .register-button {
+#register .register-button, #register .login-button, #login .register-button, #login .login-button {
   text-align: center;
   margin: 0 20px; }
-  #register .register-button button, #login .register-button button {
+  #register .register-button button, #register .login-button button, #login .register-button button, #login .login-button button {
     font-size: 24px;
     background: #55e68c;
     padding: 6px 32px;
     cursor: pointer;
     transition: background 0.3s; }
-    #register .register-button button:hover, #login .register-button button:hover {
+    #register .register-button button:hover, #register .login-button button:hover, #login .register-button button:hover, #login .login-button button:hover {
       background: #00c74c; }
-#register .login-link, #login .login-link {
+#register .login-link, #register .register-link, #login .login-link, #login .register-link {
   margin: 20px 0 0 20px;
   text-align: right; }
-  #register .login-link a, #login .login-link a {
+  #register .login-link a, #register .register-link a, #login .login-link a, #login .register-link a {
     color: #1d66aa;
     transition: color 0.2s; }
-    #register .login-link a:hover, #login .login-link a:hover {
+    #register .login-link a:hover, #register .register-link a:hover, #login .login-link a:hover, #login .register-link a:hover {
       color: #144572; }
 
 /*
@@ -652,6 +684,7 @@ button {
   border-radius: 12px;
   background: #e7e7e7; }
 #profile .profile-area .level-bar .exp-bar {
+  min-width: 20px;
   transition: width 1.5s ease-in-out;
   width: 0;
   background: linear-gradient(to right, #77df33, #2fe0ba); }
