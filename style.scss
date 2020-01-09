@@ -99,6 +99,7 @@ header{
 
         h1{
             color: $main-color;
+            font-family: 'Orbitron', sans-serif;
         }
     }
     @include mq-down(){
@@ -674,16 +675,16 @@ button{
         padding: 28px;
         border-radius: 8px;
         background: linear-gradient(to bottom, rgb(225, 245, 233), rgb(223, 231, 245));
-        filter: drop-shadow(5px 5px 6px rgba(99, 99, 99, 0.404));
+        filter: drop-shadow(6px 6px 4px rgba(99, 99, 99, 0.404)) hue-rotate(0deg);
         transition: filter 0.3s;
         &:hover{
-            filter: drop-shadow(2px 2px 2px rgba(99, 99, 99, 0.555));
+            filter: drop-shadow(3px 2px 2px rgba(99, 99, 99, 0.555)) hue-rotate(30deg);
         }
     }
     .game-card-title{
         padding-bottom: 8px;
         margin-bottom: 12px;
-        border-bottom: solid 1.5px rgba(68, 68, 68, 0.5);
+        border-bottom: double 4px rgba(68, 68, 68, 0.5);
         h2{
             font-size: 22px;
             color: rgb(45, 148, 161);
