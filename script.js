@@ -226,26 +226,16 @@ $(function () {
         const button = $(this);
         const userID = $('[type=text]').val();
         const password = $('.user-pw-1').find('[type=password]').val();
-        const retaypePassword = $('.user-pw-2').find('[type=password]').val();
+        const retypePassword = $('.user-pw-2').find('[type=password]').val();
 
-        button.attr("disabled", true)
+        button.attr("disabled", true);
 
-        //初期化
-        errorMessageHtml = "";
-        allErrorFlg = false;
-        for (key in errorFlg) {
-            errorFlg[key] = false;
-            $("." + errorInput[key] + " input").css("border", "solid 1px white");
-        }
-
-        // 入力チェック
-        vaidRegister(userID, password, retaypePassword);
+        resetError();
+        vaidRegister(userID, password, retypePassword);
         errorFlagCheck();
 
-
+        //エラーがなかった場合の処理
         if (allErrorFlg === false) {
-            //エラーがなかった場合の処理
-
             // 各フォームから値を取得してJSONデータを作成
             let data = {
                 user_id: userID,
@@ -285,23 +275,14 @@ $(function () {
         const userID = $('[type=text]').val();
         const password = $('.user-pw-1').find('[type=password]').val();
 
-        button.attr("disabled", true)
+        button.attr("disabled", true);
 
-        // 初期化
-        errorMessageHtml = "";
-        allErrorFlg = false;
-        for (key in errorFlg) {
-            errorFlg[key] = false;
-            $("." + errorInput[key] + " input").css("border", "solid 1px white");
-        }
-
-        // 入力チェック
+        resetError();
         vaidLogin(userID, password);
         errorFlagCheck();
 
+        //エラーがなかった場合の処理
         if (allErrorFlg === false) {
-            //エラーがなかった場合の処理
-
             // 各フォームから値を取得してJSONデータを作成
             let data = {
                 user_id: userID,
@@ -333,6 +314,18 @@ $(function () {
 
         button.attr("disabled", false)
     });
+
+    /**
+     * 関数 : エラーフラグとメッセージの初期化
+     */
+    function resetError() {
+        errorMessageHtml = "";
+        allErrorFlg = false;
+        for (key in errorFlg) {
+            errorFlg[key] = false;
+            $("." + errorInput[key] + " input").css("border", "solid 1px white");
+        }
+    }
 
     /**
      * 関数 : エラーフラグからメッセージを生成
@@ -370,9 +363,9 @@ $(function () {
      * 関数 : 新規登録フォームのValidate
      * @param {string} userID 
      * @param {string} password 
-     * @param {string} retaypePassword 
+     * @param {string} retypePassword 
      */
-    function vaidRegister(userID, password, retaypePassword) {
+    function vaidRegister(userID, password, retypePassword) {
         if (userID.length < 6) {
             errorFlg["shortId"] = true;
         } else {
@@ -417,7 +410,7 @@ $(function () {
                     errorFlg["badPw"] = true;
                 } else {
                     errorFlg["badPw"] = false;
-                    if (password != retaypePassword) {
+                    if (password != retypePassword) {
                         errorFlg["retypeDismatchPw"] = true;
                     } else {
                         errorFlg["retypeDismatchPw"] = false;
@@ -486,6 +479,8 @@ $(function () {
             case "profile":
                 if (!("token" in localStorage)) {
                     window.location.href = "login.html";
+                } else {
+                    setProfile();
                 }
                 break;
             case "login":
@@ -498,5 +493,83 @@ $(function () {
                 }
         }
     });
+
+    function setProfile() {
+        const accessToken = localStorage.getItem('token');
+        // WebAPIアクセス実行
+        $.ajax({
+            type: "get",
+            url: `${apiUrl}/user/me`,
+            contentType: 'application/json',
+            dataType: "json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", accessToken);
+            },
+            async: false,
+        })
+            .done(function (result) {
+                console.log(result)
+                $(".user-id").append(`<p><span>${result.user_id}</span></p>`);
+                $(".status").append(`<p><span>${result.title}</span></p>`);
+                if (result.easy_high_score === "") {
+                    $(".easy-mode").append(`<p>初級編 : <span>記録なし</span></p>`);
+                } else {
+                    $(".easy-mode").append(`<p>初級編 : <span>${result.easy_high_score}</span></p>`);
+                }
+
+                if (result.easy_high_score === "") {
+                    $(".normal-mode").append(`<p>初級編 : <span>記録なし</span></p>`);
+                } else {
+                    $(".normal-mode").append(`<p>初級編 : <span>${result.normal_high_score}</span></p>`);
+                }
+
+                if (result.easy_high_score === "") {
+                    $(".hard-mode").append(`<p>初級編 : <span>記録なし</span></p>`);
+                } else {
+                    $(".hard-mode").append(`<p>初級編 : <span>${result.hard_high_score}</span></p>`);
+                }
+            })
+            .fail(function () {
+                console.log("NG")
+            });
+
+        $.ajax({
+            type: "get",
+            url: `${apiUrl}/play_history/list`,
+            contentType: 'application/json',
+            dataType: "json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", accessToken);
+            },
+        })
+            .done(function (result) {
+                for (key in result) {
+                    const today = new Date(result[key].play_date);
+                    const year = today.getFullYear();
+                    const month = today.getMonth() + 1;
+                    const day = today.getDate();
+
+                    $(".history-list").append(
+                        `<div class="history-card">
+                            <div class="play-time">
+                                プレイ日時　: <span>${year}年${month}月${day}日</span>
+                            </div>
+                            <div class="play-mode">
+                                ゲームモード: <span>${result[key].game_mode}</span>
+                            </div>
+                            <div class="goal-time">
+                                クリアタイム: <span>${result[key].clear_time}</span>
+                            </div>
+                            <div class="rank">
+                                ランク　　　: <span>${result[key].Rank}</span>
+                            </div>
+                            <div class="exp-points">
+                                獲得経験値　: <span>${result[key].exp}</span>
+                            </div>
+                        </div>`
+                    );
+                }
+            });
+    }
 });
 
