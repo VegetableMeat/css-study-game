@@ -34,28 +34,34 @@
     [
       {
         "type": "三角形",
-        "property": [ "border-width", "border-color" ]
+        "property": [ "border-width", "border-color", "transform" ]
       },
       {
         "type": "四角形",
-        "property": [ "width", "height", "background-color" ]
+        "property": [ "width", "height", "background-color", "transform" ]
       },
       {
         "type": "円",
-        "property": [ "width", "height", "border-radius", "background-color" ]
+        "property": [ "width", "height", "border-radius", "background-color", "transform" ]
       }
     ]
   ],
   "config": {
     "regular": {
-      "width": "^([0-9]+px)$",
-      "height": "^([0-9]+px)$",
-      "border-width": "^([0-9]+px) ([0-9]+px) ([0-9]+px) ([0-9]+px)$",
-      "border-radius": "^([1-9]|[1-9][0-9]|100)%$",
-      "opacity": "^(0?.[1-9]|1(.0)?)$",
-      "border-color": "^#((0|f|F){3}|(00|ff|FF|fF|Ff){3})$",
-      "background-color": "^#((0|f|F){3}|(00|ff|FF|fF|Ff){3})$",
-      "filter": "^(drop-shadow)[(](([1-9]|10)px) (([1-9]|10)px)[)]$"
+      "width": "^([0-9]+px)[ ]*$",
+      "height": "^([0-9]+px)[ ]*$",
+      "border-width": "^([0-9]+px)[ ]+([0-9]+px)[ ]+([0-9]+px)[ ]+([0-9]+px)[ ]*$",
+      "border-radius": "^([1-9]|[1-9][0-9]|100)%[ ]*$",
+      "opacity": "^(0?.[1-9]|1(.0)?)[ ]*$",
+      "border-color": "^#((0|f|F){3}|(00|ff|FF|fF|Ff){3})[ ]*$",
+      "background-color": "^#((0|f|F){3}|(00|ff|FF|fF|Ff){3})[ ]*$",
+      "filter": "^(drop-shadow)[ ]*[(][ ]*(([1-9]|10)px)[ ]+(([1-9]|10)px)[ ]*[)][ ]*$",
+      "transform": {
+        "rotate": "^(rotate)[ ]*[(][ ]*(([1-9]|[1-9][0-9]|1[0-7][0-9]|180)deg)[ ]*[)][ ]*$",
+        "translate": "^(translate)[ ]*[(][ ]*(([1-9]|10)px)[ ]*,[ ]*(([1-9]|10)px)[ ]*[)][ ]*$",
+        "scale": "^(scale)[ ]*[(][ ]*(0?.[1-9])[ ]*,[ ]*(0?.[1-9])[ ]*[)][ ]*$"
+      },
+      "background": "^(linear-gradient)[ ]*[(][ ]*(#((0|f|F){3}|(00|ff|FF|fF|Ff){3})[ ]*,[ ]*#((0|f|F){3}|(00|ff|FF|fF|Ff){3}))[ ]*[)][ ]*$"
     },
     "color": {
       "#000": "黒色",
@@ -69,7 +75,7 @@
     },
     "sub-property": [
       [ "opacity", "filter" ],
-      [ "transform", "background" ]
+      [ "background" ]
     ]
   }
 }
