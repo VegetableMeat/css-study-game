@@ -1,7 +1,7 @@
 $(function() {
     // TODO ローカルストレージに格納されている値を難易度にする
     // 難易度 初級0、中級1、上級2
-    const diff = 2;
+    const diff = 0;
     var form, timer, sub_property_1, sub_property_2;
     var answer = {
         "width":"",
@@ -21,12 +21,11 @@ $(function() {
         time++;
     };
 
-    createQuestion();
-
     /* --------------------------------------- */
     /*      スタートボタンが押されたら時間を計測
     /* --------------------------------------- */
     $('.start-button button').on('click', function() {
+        createQuestion();
         timer = setInterval(time_add, 1000);
     });
 
