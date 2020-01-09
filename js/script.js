@@ -1,7 +1,7 @@
 $(function() {
     // TODO ローカルストレージに格納されている値を難易度にする
     // 難易度 初級0、中級1、上級2
-    const diff = 0;
+    const diff = 2;
     var form, timer, sub_property_1, sub_property_2;
     var answer = {
         "width":"",
@@ -91,7 +91,6 @@ $(function() {
                     $('#object').css("border-style", "none");
                 }
             }
-            // $('#object').css("transform", "rotate(45deg)");
 
             // 答え合わせ
             clearJudge(result, stage["property"], data["config"]["sub-property"]);
@@ -181,7 +180,6 @@ $(function() {
                 var scale_x = ((Math.floor(Math.random() * 9) + 1) / 10).toFixed(1);
                 var scale_y = ((Math.floor(Math.random() * 9) + 1) / 10).toFixed(1);                
                 sub_property_2 = 0;
-                // Math.floor(Math.random() * 2);
 
                 switch(transform) {
                     case 0:
@@ -195,9 +193,7 @@ $(function() {
                         break;
                 }
 
-                if(sub_property_2) {
-                    answer["border-style"];
-                } else if(form != 0) {
+                if(form != 0) {
                     var reverse_color_3 = answer["color-3"].replace(/#/, '').split("");
                     var reverse_color_6 = answer["color-6"].replace(/#/, '').split("");
                     answer["background"] = { "color_3" : [ answer["color-3"], "#" ],
@@ -271,12 +267,14 @@ $(function() {
                 }
             }
 
-            question += stage["type"] + "を作成してください。</p>";
+            question += stage["type"] + "を作成してください。";
             
             if(sub_property_1 == 1) {
-                question += "<br><p>影は本体から右に" + answer["filter"] + "px、下に" + answer["filter"] + "pxです";
-                question += "（※影のぼかしと色の指定は不要）</p>";
+                question += "<br>影は本体から右に" + answer["filter"] + "px、下に" + answer["filter"] + "pxです";
+                question += "（※影のぼかしと色の指定は不要）";
             }
+
+            question += "</p>";
 
             $('.question-text').append(question);
             
