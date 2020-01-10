@@ -411,7 +411,7 @@ $(function() {
             error_msg["LengthError"] = "※重複しているプロパティが存在します。";
         }
 
-        // 答えと入力された値を正規表現で判定する
+        // 答えと入力された値を比べて正悟判定をする
         for(key in result[1]) {
             switch(key) {
                 case "width":
