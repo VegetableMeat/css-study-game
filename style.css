@@ -279,7 +279,7 @@ button {
     background: dimgray;
     max-height: 328px;
     min-height: 200px;
-    height: calc(30vw + 42px);
+    height: auto;
     width: 50vw;
     max-width: 570px; }
     @media screen and (max-width: 767px) {
