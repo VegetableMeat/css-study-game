@@ -1,0 +1,104 @@
+{
+  "class": [
+    [
+      {
+        "type": "三角形",
+        "default": { "border-color":"transparent transparent #fff transparent" },
+        "property": [ "border-width" ]
+      },
+      {
+        "type": "四角形",
+        "default": { "border-color":"#fff", "background":"#fff" },
+        "property": [ "width", "height" ]
+      },
+      {
+        "type": "円",
+        "default": { "border-color":"#fff", "background":"#fff" },
+        "property": [ "width", "height", "border-radius" ]
+      }
+    ],
+    [
+      {
+        "type": "三角形",
+        "property": [ "border-width", "border-color" ]
+      },
+      {
+        "type": "四角形",
+        "property": [ "width", "height", "background-color" ]
+      },
+      {
+        "type": "円",
+        "property": [ "width", "height", "border-radius", "background-color" ]
+      }
+    ],
+    [
+      {
+        "type": "三角形",
+        "property": [ "border-width", "border-color", "transform" ]
+      },
+      {
+        "type": "四角形",
+        "property": [ "width", "height", "background-color", "transform" ]
+      },
+      {
+        "type": "円",
+        "property": [ "width", "height", "border-radius", "background-color", "transform" ]
+      }
+    ]
+  ],
+  "config": {
+    "rank": [
+      {
+        "S": [ 180, 500 ],
+        "A": [ 240, 300 ],
+        "B": [ 300, 200 ],
+        "C": [ 360, 100 ],
+        "D": [ 0, 50 ]
+      },
+      {
+        "S": [ 300, 500 ],
+        "A": [ 360, 300 ],
+        "B": [ 420, 200 ],
+        "C": [ 480, 100 ],
+        "D": [ 0, 50 ]
+      },
+      {
+        "S": [ 480, 500 ],
+        "A": [ 540, 300 ],
+        "B": [ 600, 200 ],
+        "C": [ 660, 100 ],
+        "D": [ 0, 50 ]
+      }
+    ],
+    "regular": {
+      "width": "^([0-9]+px)[ ]*$",
+      "height": "^([0-9]+px)[ ]*$",
+      "border-width": "^([0-9]+px)[ ]+([0-9]+px)[ ]+([0-9]+px)[ ]+([0-9]+px)[ ]*$",
+      "border-radius": "^([1-9]|[1-9][0-9]|100)%[ ]*$",
+      "opacity": "^(0?.[1-9]|1(.0)?)[ ]*$",
+      "border-color": "^#((0|f|F){3}|(00|ff|FF|fF|Ff){3})[ ]*$",
+      "background-color": "^#((0|f|F){3}|(00|ff|FF|fF|Ff){3})[ ]*$",
+      "filter": "^(drop-shadow)[ ]*[(][ ]*(([1-9]|10)px)[ ]+(([1-9]|10)px)[ ]*[)][ ]*$",
+      "transform": {
+        "rotate": "^(rotate)[ ]*[(][ ]*(([1-9]|[1-9][0-9]|1[0-7][0-9]|180)deg)[ ]*[)][ ]*$",
+        "translate": "^(translate)[ ]*[(][ ]*(([1-9]|10)px)[ ]*,[ ]*(([1-9]|10)px)[ ]*[)][ ]*$",
+        "scale": "^(scale)[ ]*[(][ ]*(0?.[1-9])[ ]*,[ ]*(0?.[1-9])[ ]*[)][ ]*$"
+      },
+      "background": "^(linear-gradient)[ ]*[(][ ]*(#((0|f|F){3}|(00|ff|FF|fF|Ff){3})[ ]*,[ ]*#((0|f|F){3}|(00|ff|FF|fF|Ff){3}))[ ]*[)][ ]*$"
+    },
+    "color": {
+      "#000": "黒色",
+      "#00f": "青色",
+      "#0f0": "緑色",
+      "#0ff": "シアン",
+      "#f00": "赤色",
+      "#f0f": "マゼンタ",
+      "#ff0": "黄色",
+      "#fff": "白色"
+    },
+    "sub-property": [
+      [ "opacity", "filter" ],
+      [ "background" ]
+    ]
+  }
+}

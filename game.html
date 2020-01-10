@@ -14,7 +14,8 @@
     <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <body id="game">
     <header>
@@ -56,9 +57,7 @@
                     <span></span>
                 </div>
                 <h2>問題文</h2>
-                <div class="question-text">
-                    <p>横が100px、縦が200pxの三角形を作成してください。</p>
-                </div>
+                <div class="question-text"></div>
             </div>
             <div class="user-answer-area">
                 <h2>現在の形</h2>
@@ -99,7 +98,7 @@
                     </div>
                     <div class="code-area-header html-code">
                         <div class="html-tab">
-                            <span class="tag"><></span>
+                            <span class="tag"></span>
                             <span class="file-name">index.html</span>
                         </div>
                     </div>
@@ -116,11 +115,7 @@
                             <spna class="comment">//object style</spna><br>
                             <span class="id-name">#object</span> {
                         </div>
-                        <div class="input-css">
-                            <input type="text">:<input type="text">;<br>
-                            <input type="text">:<input type="text">;<br>
-                            <input type="text">:<input type="text">;
-                        </div>
+                        <div class="input-css"></div>
                         <div class="css-end-label">
                             }
                         </div>
@@ -130,10 +125,7 @@
             <div class="run-button">
                 <button onfocus="this.blur();">実行</button>
             </div>
-            <div class="error-message">
-                <h3>エラー</h3>
-                <p>※不正なプロパティまたは値が入力されています。</p>
-            </div>
+            <div class="error-message"></div>
         </div>
     </div>
     <div class="modal">
@@ -149,10 +141,10 @@
             <h3>All Stage Clear!!</h3>
         </div>
         <div class="result-time">
-            <span>クリアタイム : 6分24秒</span>
+            <span></span> <!-- クリアタイム : 6分24秒 -->
         </div>
         <div class="result-rank">
-            <span>Rank : <span class="rank">B</span></span>
+            <span>Rank : <span class="rank"></span></span> <!-- B -->
         </div>
         <div class="level-area">
             <div class="level-bar">
@@ -177,6 +169,7 @@
 
     </footer>
     <script src="script.js"></script>
+    <script src="game.js"></script>
 </body>
 
 </html>
