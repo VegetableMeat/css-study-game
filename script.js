@@ -73,11 +73,9 @@ $(function () {
 
 
     //プロフィール画面　経験ゲージアニメーション
-    nextLevelExp = totalExp % levelUpExp;
+    let nextLevelExp
     expBarWidth = nextLevelExp / levelUpExp * 100;
     $("#profile .exp-bar").css("width", expBarWidth + "%");
-
-
 
 
     //ゲーム画面　ゲーム結果モーダルウィンドウ　経験値ゲージアニメーション
@@ -461,14 +459,45 @@ $(function () {
 
     // ログアウトアイコン押下に実行
     $(".fa-sign-out-alt").click(function () {
-        localStorage.removeItem("token")
-        window.location.href = "login.html";
+        swal({
+            title: "確認",
+            text: "ログアウトしてもよろしいですか？",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((move) => {
+                if (move) {
+                    localStorage.removeItem("token")
+                    window.location.href = "login.html";
+                } else {
+
+                }
+            });
     });
 
     /**
      * 各画面遷移時に実行
      */
     $(document).ready(function () {
+        if ("token" in localStorage) {
+            const accessToken = localStorage.getItem('token');
+
+            $.ajax({
+                type: "get",
+                url: `${apiUrl}/play_history/list`,
+                contentType: 'application/json',
+                dataType: "json",
+                async: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", accessToken);
+                },
+            })
+                .fail(function () {
+                    localStorage.removeItem("token")
+                });
+        }
+
         const pageID = document.body.id
 
         switch (pageID) {
@@ -521,25 +550,32 @@ $(function () {
             async: false,
         })
             .done(function (result) {
-                console.log(result)
-                $(".user-id").append(`<p><span>${result.user_id}</span></p>`);
-                $(".status").append(`<p><span>${result.title}</span></p>`);
-                if (result.easy_high_score === "") {
+                console.log(result);
+                const nextLevelExp = result.NextExp;
+                expBarWidth = (levelUpExp - nextLevelExp) / levelUpExp * 100;
+                $("#profile .exp-bar").css("width", expBarWidth + "%");
+
+                $(".level-value").append(`<span>${result.Level}</span>`);
+                $(".total-exp").append(`<span>${result.TotalExp}</span>`);
+                $(".next-exp").append(`<span>${result.NextExp}</span>`);
+                $(".user-id").append(`<p><span>${result.UserID}</span></p>`);
+                $(".status").append(`<p><span>${result.Title}</span></p>`);
+                if (result.EasyHighScore === "") {
                     $(".easy-mode").append(`<p>初級編 : <span>記録なし</span></p>`);
                 } else {
-                    $(".easy-mode").append(`<p>初級編 : <span>${result.easy_high_score}</span></p>`);
+                    $(".easy-mode").append(`<p>初級編 : <span>${result.EasyHighScore}</span></p>`);
                 }
 
-                if (result.easy_high_score === "") {
+                if (result.NormalHighScore === "") {
                     $(".normal-mode").append(`<p>中級編 : <span>記録なし</span></p>`);
                 } else {
-                    $(".normal-mode").append(`<p>中級編 : <span>${result.normal_high_score}</span></p>`);
+                    $(".normal-mode").append(`<p>中級編 : <span>${result.NormalHighScore}</span></p>`);
                 }
 
-                if (result.easy_high_score === "") {
+                if (result.HardHighScore === "") {
                     $(".hard-mode").append(`<p>上級編 : <span>記録なし</span></p>`);
                 } else {
-                    $(".hard-mode").append(`<p>上級編 : <span>${result.hard_high_score}</span></p>`);
+                    $(".hard-mode").append(`<p>上級編 : <span>${result.HardHighScore}</span></p>`);
                 }
             })
             .fail(function () {
@@ -598,6 +634,7 @@ $(function () {
                 </div>
             </div>`
         );
+
         for (key in playHistories) {
             const playDay = new Date(playHistories[key].play_date);
 
