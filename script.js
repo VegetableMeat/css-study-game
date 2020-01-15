@@ -184,11 +184,11 @@ $(function () {
         "unregisterId": "*入力されたユーザーIDは登録されていません。",
         "diffPw": "*ユーザー名、またはパスワードが違います。",
         "badId": "*ユーザーIDに不正な文字が使用されています。英数字のみで入力してください。",
-        "longId": "*ユーザーIDの文字数が超過しています。〜文字以内で入力してください。",
-        "shortId": "*ユーザーIDの文字数が少なすぎます。～文字以上で入力してください。",
+        "longId": "*ユーザーIDの文字数が超過しています。30文字以内で入力してください。",
+        "shortId": "*ユーザーIDの文字数が少なすぎます。6文字以上で入力してください。",
         "badPw": "*パスワードに不正な文字が使用されています。英数字のみで入力してください。",
-        "longPw": "*パスワードの文字数が超過しています。〜文字以内で入力してください。",
-        "shortPw": "*パスワードの文字数が少なすぎます。～文字以上で入力してください。"
+        "longPw": "*パスワードの文字数が超過しています。30文字以内で入力してください。",
+        "shortPw": "*パスワードの文字数が少なすぎます。6文字以上で入力してください。"
     };
     const errorInput = {
         "existId": "user-id",
@@ -459,6 +459,12 @@ $(function () {
         }
     }
 
+    // ログアウトアイコン押下に実行
+    $(".fa-sign-out-alt").click(function () {
+        localStorage.removeItem("token")
+        window.location.href = "login.html";
+    });
+
     /**
      * 各画面遷移時に実行
      */
@@ -487,16 +493,23 @@ $(function () {
                 if ("token" in localStorage) {
                     window.location.href = "front.html";
                 }
+                break;
             case "register":
                 if ("token" in localStorage) {
                     window.location.href = "front.html";
                 }
+                break;
         }
     });
 
+    let playHistories = {};
+    let showTimeFlg = new Date()
+
+    /**
+     * 関数 : プロフィールの表示
+     */
     function setProfile() {
         const accessToken = localStorage.getItem('token');
-        // WebAPIアクセス実行
         $.ajax({
             type: "get",
             url: `${apiUrl}/user/me`,
@@ -518,15 +531,15 @@ $(function () {
                 }
 
                 if (result.easy_high_score === "") {
-                    $(".normal-mode").append(`<p>初級編 : <span>記録なし</span></p>`);
+                    $(".normal-mode").append(`<p>中級編 : <span>記録なし</span></p>`);
                 } else {
-                    $(".normal-mode").append(`<p>初級編 : <span>${result.normal_high_score}</span></p>`);
+                    $(".normal-mode").append(`<p>中級編 : <span>${result.normal_high_score}</span></p>`);
                 }
 
                 if (result.easy_high_score === "") {
-                    $(".hard-mode").append(`<p>初級編 : <span>記録なし</span></p>`);
+                    $(".hard-mode").append(`<p>上級編 : <span>記録なし</span></p>`);
                 } else {
-                    $(".hard-mode").append(`<p>初級編 : <span>${result.hard_high_score}</span></p>`);
+                    $(".hard-mode").append(`<p>上級編 : <span>${result.hard_high_score}</span></p>`);
                 }
             })
             .fail(function () {
@@ -543,33 +556,80 @@ $(function () {
             },
         })
             .done(function (result) {
-                for (key in result) {
-                    const today = new Date(result[key].play_date);
-                    const year = today.getFullYear();
-                    const month = today.getMonth() + 1;
-                    const day = today.getDate();
-
-                    $(".history-list").append(
-                        `<div class="history-card">
-                            <div class="play-time">
-                                プレイ日時　: <span>${year}年${month}月${day}日</span>
-                            </div>
-                            <div class="play-mode">
-                                ゲームモード: <span>${result[key].game_mode}</span>
-                            </div>
-                            <div class="goal-time">
-                                クリアタイム: <span>${result[key].clear_time}</span>
-                            </div>
-                            <div class="rank">
-                                ランク　　　: <span>${result[key].Rank}</span>
-                            </div>
-                            <div class="exp-points">
-                                獲得経験値　: <span>${result[key].exp}</span>
-                            </div>
-                        </div>`
-                    );
-                }
+                playHistories = result
+                showTimeFlg.setDate(showTimeFlg.getDate() - 31);
+                showPlayHistories();
             });
+    }
+
+    // 表示期間切り替え時処理
+    $('#period-menu').change(function () {
+        showTimeFlg = new Date();
+        var selectTime = $('option:selected').val();
+
+        switch (selectTime) {
+            case "1":
+                break;
+            case "2":
+                showTimeFlg.setDate(showTimeFlg.getDate() - 7);
+                break;
+            case "3":
+                showTimeFlg.setDate(showTimeFlg.getDate() - 31);
+                break;
+            case "4":
+                showTimeFlg.setDate(showTimeFlg.getDate() - 365);
+                break;
+            case "5":
+                showTimeFlg.setFullYear("0")
+                break;
+        }
+
+        showPlayHistories();
+    })
+
+    // プレイ履歴表示の判定と表示処理
+    function showPlayHistories() {
+        $(".history-list").replaceWith(
+            `<div class="history-list">
+                <div class="history-none">
+                    <div class="history-card">
+                        記録なし
+                    </div>
+                </div>
+            </div>`
+        );
+        for (key in playHistories) {
+            const playDay = new Date(playHistories[key].play_date);
+
+            if (playDay >= showTimeFlg) {
+
+                const year = playDay.getFullYear();
+                const month = playDay.getMonth() + 1;
+                const day = playDay.getDate();
+
+                $(".history-none").remove();
+
+                $(".history-list").append(
+                    `<div class="history-card">
+                        <div class="play-time">
+                            プレイ日時　: <span>${year}年${month}月${day}日</span>
+                        </div>
+                        <div class="play-mode">
+                            ゲームモード: <span>${playHistories[key].game_mode}</span>
+                        </div>
+                        <div class="goal-time">
+                            クリアタイム: <span>${playHistories[key].clear_time}</span>
+                        </div>
+                        <div class="rank">
+                            ランク　　　: <span>${playHistories[key].Rank}</span>
+                        </div>
+                        <div class="exp-points">
+                            獲得経験値　: <span>${playHistories[key].exp}</span>
+                        </div>
+                    </div>`
+                );
+            }
+        }
     }
 });
 
