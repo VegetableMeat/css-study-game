@@ -139,6 +139,7 @@ $(function () {
             })
                 .done(function (result) {
                     errorFlg["diffPw"] = false;
+                    localStorage.setItem('id', userID)
                     localStorage.setItem('token', result.token)
                     window.location.href = "front.html";
                 }).fail(function () {
