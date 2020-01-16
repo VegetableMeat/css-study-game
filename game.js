@@ -28,6 +28,7 @@ $(function () {
     //合計獲得経験値（仮データ）
     var beforeTotalExp;
     var afterTotalExp;
+    var beforeNextExp;
     var afterNextExp;
     var getExp;
     /*********************************************************/
@@ -616,7 +617,7 @@ $(function () {
                 })
                     .done(function (result) {
                         beforeTotalExp = result.TotalExp;
-                        beforeNextLevelExp = result.NextExp;
+                        beforeNextExp = result.NextExp;
                     });
 
                 let data = {
@@ -745,11 +746,12 @@ $(function () {
     function getExpAnimation() {
         var beforeLevel = Math.floor(beforeTotalExp / 1000) * 1;
         var afterLevel = Math.floor(afterTotalExp / 1000) * 1;
-        expBarWidth = 100 - afterNextExp / levelUpExp * 100;
+
+        expBarWidth = 100 - beforeNextExp / levelUpExp * 100;
+        console.log(expBarWidth)
 
         $("#game .exp-bar").css("transition", "0s");
         $("#game .exp-bar").css("width", expBarWidth + "%");
-
         setTimeout(function () {
             $("#game .exp-bar").css("transition", "width 1s ease-in-out");
         }, 500);
@@ -782,15 +784,17 @@ $(function () {
                             $("#game .exp-bar").css("width", "0");
                         }, 6000);
                         setTimeout(function () {
+                            expBarWidth = 100 - afterNextExp / levelUpExp * 100;
                             $("#game .exp-bar").css("transition", "width 1s ease-in-out");
                             $("#game .exp-bar").css("width", expBarWidth + "%");
+                            console.log(expBarWidth)
                         }, 6200);
                     }
                 }
             } else {
-                afterNextExp = levelUpExp - afterTotalExp % levelUpExp;
-                expBarWidth = nextLevelExp / levelUpExp * 100;
+                expBarWidth = 100 - afterNextExp / levelUpExp * 100;
                 $("#game .exp-bar").css("width", expBarWidth + "%");
+                console.log(expBarWidth)
             }
         }, 1000);
 
