@@ -20,7 +20,7 @@ $(function () {
     }
 
     /*********************************************************/
-    var gameCount = 3;
+    var gameCount = 1;
     const gameCountMax = 3;
     var gameCountText = gameCount + "/" + gameCountMax;
     //１レベルごとに必要な経験値
