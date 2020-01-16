@@ -1,22 +1,31 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script>
+        window.onbeforeunload = function (e) {
+            e.returnValue = "ページを離れようとしています。よろしいですか？";
+        }
+    </script>
     <title>CSS Study Game</title>
     <link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
+
 <body id="game">
     <header>
         <div class="center">
             <div class="header-icon">
                 <i class="fab fa-css3-alt"></i>
             </div>
-            <a href="front.html">
+            <a href="front.html" onclick="window.onbeforeunload = null;">
                 <div class="header-title">
                     <h1>CSS Study Game</h1>
                 </div>
@@ -24,8 +33,10 @@
         </div>
         <nav class="header-nav">
             <ul>
-                <li class="profile"><a href="profile.html"><i class="text-primary fas fa-user-alt"></i></a></li>
-                <li class="exit"><a href=""><i class="fas fa-sign-out-alt"></i></a></li>
+                <li class="profile"><a href="profile.html" onclick="window.onbeforeunload = null;"><i
+                            class="text-primary fas fa-user-alt"></i></a></li>
+                <li class="exit"><a href="" onclick="window.onbeforeunload = null;"><i
+                            class="fas fa-sign-out-alt"></i></a></li>
             </ul>
         </nav>
     </header>
@@ -43,16 +54,14 @@
                 <p>※ゲームスタートボタンを押すとゲームが開始され、タイムの計測が開始します。</p>
             </div>
         </div>
-        
+
         <div class="game-area">
             <div class="question-area">
                 <div class="game-count">
                     <span></span>
                 </div>
                 <h2>問題文</h2>
-                <div class="question-text">
-                    <p>横が100px、縦が200pxの三角形を作成してください。</p>
-                </div>
+                <div class="question-text"></div>
             </div>
             <div class="user-answer-area">
                 <h2>現在の形</h2>
@@ -93,15 +102,17 @@
                     </div>
                     <div class="code-area-header html-code">
                         <div class="html-tab">
-                            <span class="tag"><></span>
+                            <span class="tag"></span>
                             <span class="file-name">index.html</span>
                         </div>
                     </div>
                     <i class="fas fa-code"></i>
                     <div class="html">
                         <span>
-                            <span class="red">&lt;div class=</span><span class="yellow">"output-css-area"</span><span class="red">&gt;</span><br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="red">&lt;div id=</span><span class="yellow">"object"</span><span class="red">&gt;&lt;/div&gt;</span><br>
+                            <span class="red">&lt;div class=</span><span class="yellow">"output-css-area"</span><span
+                                class="red">&gt;</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="red">&lt;div id=</span><span
+                                class="yellow">"object"</span><span class="red">&gt;&lt;/div&gt;</span><br>
                             <span class="red">&lt;/div&gt;</span>
                         </span>
                     </div>
@@ -110,11 +121,7 @@
                             <spna class="comment">//object style</spna><br>
                             <span class="id-name">#object</span> {
                         </div>
-                        <div class="input-css">
-                            <input type="text">:<input type="text">;<br>
-                            <input type="text">:<input type="text">;<br>
-                            <input type="text">:<input type="text">;
-                        </div>
+                        <div class="input-css"></div>
                         <div class="css-end-label">
                             }
                         </div>
@@ -124,10 +131,7 @@
             <div class="run-button">
                 <button onfocus="this.blur();">実行</button>
             </div>
-            <div class="error-message">
-                <h3>エラー</h3>
-                <p>※不正なプロパティまたは値が入力されています。</p>
-            </div>
+            <div class="error-message"></div>
         </div>
     </div>
     <div class="modal">
@@ -135,7 +139,7 @@
             <h3>Stage Clear!</h3>
         </div>
         <div class="next-button">
-                <button onfocus="this.blur();">NEXT</button>
+            <button onfocus="this.blur();">NEXT</button>
         </div>
     </div>
     <div class="modal-result">
@@ -143,10 +147,10 @@
             <h3>All Stage Clear!!</h3>
         </div>
         <div class="result-time">
-            <span>クリアタイム : 6分24秒</span>
+            <span></span> <!-- クリアタイム : 6分24秒 -->
         </div>
         <div class="result-rank">
-            <span>Rank : <span class="rank">B</span></span>
+            <span>Rank : <span class="rank"></span></span> <!-- B -->
         </div>
         <div class="level-area">
             <div class="level-bar">
@@ -164,13 +168,15 @@
             </div>
         </div>
         <div class="finish-button">
-            <a href="front.html"><button onfocus="this.blur();">トップ画面へ戻る</button></a>
+            <a href="front.html"><button onfocus="this.blur();"
+                    onclick="window.onbeforeunload = null;">トップ画面へ戻る</button></a>
         </div>
     </div>
     <footer>
 
     </footer>
     <script src="script.js"></script>
+    <script src="game.js"></script>
 </body>
 
 </html>
