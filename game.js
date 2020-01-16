@@ -1,3 +1,4 @@
+
 $(function () {
     // 難易度 初級0、中級1、上級2
     var diff;
@@ -25,6 +26,7 @@ $(function () {
     var gameCountText = gameCount + "/" + gameCountMax;
     //１レベルごとに必要な経験値
     const levelUpExp = 1000;
+    var resLevel;
     //合計獲得経験値（仮データ）
     var beforeTotalExp;
     var afterTotalExp;
@@ -49,7 +51,7 @@ $(function () {
     // history["time"]に3回分の秒数が入る（例：history["time"] = [ 50, 100, 150 ]）
     var history = {
         "form": [],
-        "time": [50, 100, 150],
+        "time": [],
     };
     var time = 0;
     var time_add = function () {
@@ -644,6 +646,7 @@ $(function () {
                         afterTotalExp = result.TotalExp;
                         afterNextExp = result.NextExp;
                         getExp = score;
+                        resLevel = result.Level;
 
                         console.log(result)
                     });
@@ -654,8 +657,10 @@ $(function () {
                 $(".modal-result").css("display", "block");
                 $("#main-body").css("filter", "blur(10px)");
                 $(".game-header").css("filter", "blur(10px)");
-                $('.result-rank .rank').text(clear_rank);
                 $('.result-time span').text("クリアタイム : " + clearTime(total_time));
+                $('.result-rank .rank').text(clear_rank);
+                $('.level span').text(resLevel);
+
 
                 // デバッグ用 必要な場合コメントを消す
                 // console.log("rank情報: ");

@@ -139,7 +139,6 @@ $(function () {
             })
                 .done(function (result) {
                     errorFlg["diffPw"] = false;
-                    localStorage.setItem('id', userID)
                     localStorage.setItem('token', result.token)
                     window.location.href = "front.html";
                 }).fail(function () {
@@ -495,6 +494,7 @@ $(function () {
 
         switch (selectTime) {
             case "1":
+                showTimeFlg = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
                 break;
             case "2":
                 showTimeFlg.setDate(showTimeFlg.getDate() - 7);
@@ -509,6 +509,7 @@ $(function () {
                 showTimeFlg.setFullYear("0")
                 break;
         }
+
 
         showPlayHistories();
     })
@@ -527,8 +528,10 @@ $(function () {
 
         for (key in playHistories) {
             const playDay = new Date(playHistories[key].play_date);
-
+            console.log(playDay)
+            console.log(showTimeFlg)
             if (playDay >= showTimeFlg) {
+
 
                 const year = playDay.getFullYear();
                 const month = playDay.getMonth() + 1;
