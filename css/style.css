@@ -1,6 +1,8 @@
+/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
+
 @charset "UTF-8";
 /*
-    共通部分
+    share stayle
 */
 * {
   margin: 0;
@@ -14,6 +16,8 @@ body {
   position: relative;
   color: #2c2c2c;
   letter-spacing: .05em;
+  background: -webkit-gradient(linear, left top, right top, from(#c1e3ff), to(#a3f8ea));
+  background: -o-linear-gradient(left, #c1e3ff, #a3f8ea);
   background: linear-gradient(to right, #c1e3ff, #a3f8ea);
   font-family: "游ゴシック Medium",YuGothic,YuGothicM,"Hiragino Kaku Gothic ProN","Hiragino Kaku Gothic Pro",メイリオ,Meiryo,sans-serif;
   font-weight: 400; }
@@ -35,7 +39,8 @@ li {
   list-style-type: none; }
 
 *, *::before, *::after {
-  box-sizing: border-box; }
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
 
 a:link, a:visited, a:hover, a:active {
   text-decoration: none; }
@@ -46,11 +51,16 @@ header {
   padding: 12px 0;
   text-align: center;
   background-color: white;
-  filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.3));
+  -webkit-filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.3));
+          filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.3));
   position: relative; }
   header .center {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center; }
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center; }
   header .header-icon {
     margin: 0 12px; }
     header .header-icon i {
@@ -71,17 +81,25 @@ header {
     top: 14px;
     right: 20px; }
     header .header-nav ul {
+      display: -webkit-box;
+      display: -ms-flexbox;
       display: flex; }
       header .header-nav ul li {
         font-size: 18px;
         padding: 4px 12px;
-        transition: transform 0.2s; }
+        -webkit-transition: -webkit-transform 0.2s;
+        transition: -webkit-transform 0.2s;
+        -o-transition: transform 0.2s;
+        transition: transform 0.2s;
+        transition: transform 0.2s, -webkit-transform 0.2s; }
         header .header-nav ul li .fa-user-alt {
           color: #3996d6; }
         header .header-nav ul li .fa-sign-out-alt {
           color: #a7a7a7; }
         header .header-nav ul li:hover {
-          transform: scale(1.4); }
+          -webkit-transform: scale(1.4);
+              -ms-transform: scale(1.4);
+                  transform: scale(1.4); }
     @media screen and (max-width: 767px) {
       header .header-nav {
         right: 10px;
@@ -97,8 +115,13 @@ header {
   margin: 40px 4vw;
   padding: 20px 40px;
   background-color: #f1fbff;
-  filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.3));
-  transition: filter 0.2s ease-in-out; }
+  -webkit-filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.3));
+          filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.3));
+  -webkit-transition: -webkit-filter 0.2s ease-in-out;
+  transition: -webkit-filter 0.2s ease-in-out;
+  -o-transition: filter 0.2s ease-in-out;
+  transition: filter 0.2s ease-in-out;
+  transition: filter 0.2s ease-in-out, -webkit-filter 0.2s ease-in-out; }
   @media screen and (min-width: 768px) {
     #main-body {
       margin: 40px auto; } }
@@ -115,13 +138,17 @@ button {
   background-color: skyblue;
   border: 1px solid rgba(255, 255, 255, 0);
   border-radius: 12px;
-  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
+  -webkit-filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
+          filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
+  -webkit-transition: .2s ease-in-out;
+  -o-transition: .2s ease-in-out;
   transition: .2s ease-in-out; }
   button:hover {
     background-color: #3093d4; }
   button:active {
     background-color: #3587be;
-    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.4)); }
+    -webkit-filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.4));
+            filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.4)); }
 
 /*
     game.html
@@ -186,8 +213,10 @@ button {
     height: 30vw;
     max-height: 300px;
     max-width: 300px;
+    background: -o-linear-gradient(315deg, #e2e2e2, #999999);
     background: linear-gradient(135deg, #e2e2e2, #999999);
-    filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.3));
+    -webkit-filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.3));
+            filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.3));
     margin-top: 42px;
     position: relative;
     border-radius: 0 0 4px 4px; }
@@ -223,7 +252,9 @@ button {
           top: 2px;
           left: 8px;
           font-size: 8px;
-          transform: scale(0.6);
+          -webkit-transform: scale(0.6);
+              -ms-transform: scale(0.6);
+                  transform: scale(0.6);
           color: white;
           font-weight: 400; }
         .user-answer-area .output-css-area .web-area .tab .plus {
@@ -231,7 +262,9 @@ button {
           color: white;
           top: -4px;
           left: 62px;
-          transform: scale(0.5); }
+          -webkit-transform: scale(0.5);
+              -ms-transform: scale(0.5);
+                  transform: scale(0.5); }
       .user-answer-area .output-css-area .web-area .bottom-area {
         position: absolute;
         top: 12px;
@@ -243,7 +276,9 @@ button {
         .user-answer-area .output-css-area .web-area .bottom-area i {
           color: white;
           font-size: 8px;
-          transform: scale(0.6) translate(4px, -8px); }
+          -webkit-transform: scale(0.6) translate(4px, -8px);
+              -ms-transform: scale(0.6) translate(4px, -8px);
+                  transform: scale(0.6) translate(4px, -8px); }
       .user-answer-area .output-css-area .web-area .url {
         position: absolute;
         top: 2px;
@@ -256,12 +291,16 @@ button {
           position: absolute;
           color: white;
           font-size: 8px;
-          transform: scale(0.6) translate(-60px, 0px); }
+          -webkit-transform: scale(0.6) translate(-60px, 0px);
+              -ms-transform: scale(0.6) translate(-60px, 0px);
+                  transform: scale(0.6) translate(-60px, 0px); }
         .user-answer-area .output-css-area .web-area .url .fa-star {
           position: absolute;
           right: 2px;
           top: 0;
-          transform: scale(0.6); }
+          -webkit-transform: scale(0.6);
+              -ms-transform: scale(0.6);
+                  transform: scale(0.6); }
   @media screen and (max-width: 767px) {
     .user-answer-area {
       float: none;
@@ -279,7 +318,7 @@ button {
     background: dimgray;
     max-height: 328px;
     min-height: 200px;
-    height: calc(30vw + 42px);
+    height: auto;
     width: 50vw;
     max-width: 570px; }
     @media screen and (max-width: 767px) {
@@ -304,6 +343,8 @@ button {
       width: 140px;
       height: 28px;
       border-radius: 8px 8px 0 0;
+      -webkit-transition: 0.2s ease-in-out;
+      -o-transition: 0.2s ease-in-out;
       transition: 0.2s ease-in-out; }
     .user-input-area .code-area .css-tab {
       background-color: #5a5a5a; }
@@ -333,7 +374,9 @@ button {
       font-size: 14px;
       font-weight: bold;
       color: orange;
-      transform: scaleX(0.6); }
+      -webkit-transform: scaleX(0.6);
+          -ms-transform: scaleX(0.6);
+              transform: scaleX(0.6); }
     .user-input-area .code-area i {
       position: absolute;
       top: 6px;
@@ -349,6 +392,8 @@ button {
     .user-input-area .code-area .id-name {
       color: #adb8dd; }
   .user-input-area .css, .user-input-area .html {
+    -webkit-transition: 0.3s ease-in-out;
+    -o-transition: 0.3s ease-in-out;
     transition: 0.3s ease-in-out; }
   .user-input-area .html {
     position: absolute;
@@ -414,7 +459,8 @@ button {
   left: 0;
   width: 100vw;
   padding: 40px;
-  box-shadow: #2c2c2c; }
+  -webkit-box-shadow: #2c2c2c;
+          box-shadow: #2c2c2c; }
   @media screen and (max-width: 767px) {
     .modal, .modal-result {
       top: 32vh; } }
@@ -441,6 +487,8 @@ button {
 .next-button button, .finish-button button {
   padding: 16px 48px;
   border: 0;
+  background: -webkit-gradient(linear, left top, left bottom, from(#00ffbf), to(#3996d6));
+  background: -o-linear-gradient(top, #00ffbf, #3996d6);
   background: linear-gradient(to bottom, #00ffbf, #3996d6); }
 
 .modal-result {
@@ -484,17 +532,26 @@ button {
     background: #e7e7e7; }
   .modal-result .level-bar .exp-bar {
     min-width: 20px;
+    -webkit-transition: width 1.5s ease-in-out;
+    -o-transition: width 1.5s ease-in-out;
     transition: width 1.5s ease-in-out;
     width: 0;
+    background: -webkit-gradient(linear, left top, right top, from(#77df33), to(#2fe0ba));
+    background: -o-linear-gradient(left, #77df33, #2fe0ba);
     background: linear-gradient(to right, #77df33, #2fe0ba); }
   .modal-result .level-bar .level-up-message {
     opacity: 0;
-    transform: translateY(-120px);
+    -webkit-transform: translateY(-120px);
+        -ms-transform: translateY(-120px);
+            transform: translateY(-120px);
     font-size: 52px;
+    -webkit-transition: 0.6s ease-in-out;
+    -o-transition: 0.6s ease-in-out;
     transition: 0.6s ease-in-out; }
     .modal-result .level-bar .level-up-message span {
       color: #e9e93b;
-      filter: drop-shadow(3px 2px 2px #2c2c2c); }
+      -webkit-filter: drop-shadow(3px 2px 2px #2c2c2c);
+              filter: drop-shadow(3px 2px 2px #2c2c2c); }
   .modal-result .finish-button button {
     padding: 8px 24px; }
 
@@ -506,20 +563,34 @@ button {
   .game-list * {
     color: #858585; }
   .game-list .game-card.easy-mode {
+    background: -webkit-gradient(linear, left top, right top, from(#f7f7db), to(#d7f5eb));
+    background: -o-linear-gradient(left, #f7f7db, #d7f5eb);
     background: linear-gradient(to right, #f7f7db, #d7f5eb); }
   .game-list .game-card.normal-mode {
+    background: -webkit-gradient(linear, left top, right top, from(#d9f2f7), to(#d4dbf3));
+    background: -o-linear-gradient(left, #d9f2f7, #d4dbf3);
     background: linear-gradient(to right, #d9f2f7, #d4dbf3); }
   .game-list .game-card.hard-mode {
+    background: -webkit-gradient(linear, left top, right top, from(#e8d8f5), to(#eecfd1));
+    background: -o-linear-gradient(left, #e8d8f5, #eecfd1);
     background: linear-gradient(to right, #e8d8f5, #eecfd1); }
   .game-list .game-card {
     margin-bottom: 24px;
     padding: 28px;
     border-radius: 8px;
+    background: -webkit-gradient(linear, left top, left bottom, from(#e1f5e9), to(#dfe7f5));
+    background: -o-linear-gradient(top, #e1f5e9, #dfe7f5);
     background: linear-gradient(to bottom, #e1f5e9, #dfe7f5);
-    filter: drop-shadow(6px 6px 4px rgba(99, 99, 99, 0.404)) hue-rotate(0deg);
-    transition: filter 0.3s; }
+    -webkit-filter: drop-shadow(6px 6px 4px rgba(99, 99, 99, 0.404)) hue-rotate(0deg);
+            filter: drop-shadow(6px 6px 4px rgba(99, 99, 99, 0.404)) hue-rotate(0deg);
+    -webkit-transition: -webkit-filter 0.3s;
+    transition: -webkit-filter 0.3s;
+    -o-transition: filter 0.3s;
+    transition: filter 0.3s;
+    transition: filter 0.3s, -webkit-filter 0.3s; }
     .game-list .game-card:hover {
-      filter: drop-shadow(3px 2px 2px rgba(99, 99, 99, 0.555)) hue-rotate(30deg); }
+      -webkit-filter: drop-shadow(3px 2px 2px rgba(99, 99, 99, 0.555)) hue-rotate(30deg);
+              filter: drop-shadow(3px 2px 2px rgba(99, 99, 99, 0.555)) hue-rotate(30deg); }
   .game-list .game-card-title {
     padding-bottom: 8px;
     margin-bottom: 12px;
@@ -533,9 +604,15 @@ button {
     font-size: 13px; }
   .game-list .game-info {
     font-size: 12px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: row-reverse; }
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse; }
     .game-list .game-info div {
       display: inline;
       margin: 0 16px 0 0;
@@ -551,7 +628,8 @@ button {
 #register header, #login header {
   margin-top: 10vh;
   background-color: rgba(0, 0, 0, 0);
-  filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0)); }
+  -webkit-filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
+          filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0)); }
   #register header i, #register header h1, #login header i, #login header h1 {
     font-size: 36px; }
     @media screen and (max-width: 767px) {
@@ -602,8 +680,19 @@ button {
       margin: 8px 0;
       outline: none;
       padding: 8px 8px 8px 40px;
-      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      -webkit-transition: 0.3s;
+      -o-transition: 0.3s;
       transition: 0.3s; }
+      #register .input-area .input-content input::-webkit-input-placeholder, #login .input-area .input-content input::-webkit-input-placeholder {
+        color: #cccccc; }
+      #register .input-area .input-content input::-moz-placeholder, #login .input-area .input-content input::-moz-placeholder {
+        color: #cccccc; }
+      #register .input-area .input-content input:-ms-input-placeholder, #login .input-area .input-content input:-ms-input-placeholder {
+        color: #cccccc; }
+      #register .input-area .input-content input::-ms-input-placeholder, #login .input-area .input-content input::-ms-input-placeholder {
+        color: #cccccc; }
       #register .input-area .input-content input::placeholder, #login .input-area .input-content input::placeholder {
         color: #cccccc; }
       #register .input-area .input-content input:hover, #login .input-area .input-content input:hover {
@@ -625,6 +714,8 @@ button {
     background: #55e68c;
     padding: 6px 32px;
     cursor: pointer;
+    -webkit-transition: background 0.3s;
+    -o-transition: background 0.3s;
     transition: background 0.3s; }
     #register .register-button button:hover, #register .login-button button:hover, #login .register-button button:hover, #login .login-button button:hover {
       background: #00c74c; }
@@ -633,6 +724,8 @@ button {
   text-align: right; }
   #register .login-link a, #register .register-link a, #login .login-link a, #login .register-link a {
     color: #1d66aa;
+    -webkit-transition: color 0.2s;
+    -o-transition: color 0.2s;
     transition: color 0.2s; }
     #register .login-link a:hover, #register .register-link a:hover, #login .login-link a:hover, #login .register-link a:hover {
       color: #144572; }
@@ -686,8 +779,12 @@ button {
   background: #e7e7e7; }
 #profile .profile-area .level-bar .exp-bar {
   min-width: 20px;
+  -webkit-transition: width 1.5s ease-in-out;
+  -o-transition: width 1.5s ease-in-out;
   transition: width 1.5s ease-in-out;
   width: 0;
+  background: -webkit-gradient(linear, left top, right top, from(#77df33), to(#2fe0ba));
+  background: -o-linear-gradient(left, #77df33, #2fe0ba);
   background: linear-gradient(to right, #77df33, #2fe0ba); }
 #profile .profile-area .mode-rank div {
   margin: 4px 0; }
@@ -716,11 +813,12 @@ button {
   padding: 12px 20px;
   margin: 0 12px 20px;
   border-radius: 8px;
+  background: -webkit-gradient(linear, left top, right top, from(#e2f7ff), to(#f3e8ff));
+  background: -o-linear-gradient(left, #e2f7ff, #f3e8ff);
   background: linear-gradient(to right, #e2f7ff, #f3e8ff);
-  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.281)); }
+  -webkit-filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.281));
+          filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.281)); }
   @media screen and (max-width: 767px) {
     #profile .history-area .history-list .history-card {
       padding: 8px;
       margin: 0 4px 12px; } }
-
-/*# sourceMappingURL=style.css.map */
