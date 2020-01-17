@@ -5,8 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script>
+        window.onbeforeunload = function (e) {
+            e.returnValue = "ページを離れようとしています。よろしいですか？";
+        }
+    </script>
     <title>CSS Study Game</title>
     <link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script> -->
@@ -19,7 +25,7 @@
             <div class="header-icon">
                 <i class="fab fa-css3-alt"></i>
             </div>
-            <a href="front.html">
+            <a href="front.html" onclick="window.onbeforeunload = null;">
                 <div class="header-title">
                     <h1>CSS Study Game</h1>
                 </div>
@@ -27,8 +33,10 @@
         </div>
         <nav class="header-nav">
             <ul>
-                <li class="profile"><a href="profile.html"><i class="text-primary fas fa-user-alt"></i></a></li>
-                <li class="exit"><a href=""><i class="fas fa-sign-out-alt"></i></a></li>
+                <li class="profile"><a href="profile.html" onclick="window.onbeforeunload = null;"><i
+                            class="text-primary fas fa-user-alt"></i></a></li>
+                <li class="exit"><a href="" onclick="window.onbeforeunload = null;"><i
+                            class="fas fa-sign-out-alt"></i></a></li>
             </ul>
         </nav>
     </header>
@@ -53,10 +61,7 @@
                     <span></span>
                 </div>
                 <h2>問題文</h2>
-                <div class="question-text">
-                    <!-- <p>横が100px、縦が200pxの三角形を作成してください。</p> -->
-                    <!-- <p></p> -->
-                </div>
+                <div class="question-text"></div>
             </div>
             <div class="user-answer-area">
                 <h2>現在の形</h2>
@@ -142,14 +147,14 @@
             <h3>All Stage Clear!!</h3>
         </div>
         <div class="result-time">
-            <span>クリアタイム : 6分24秒</span>
+            <span></span> <!-- クリアタイム : 6分24秒 -->
         </div>
         <div class="result-rank">
-            <span>Rank : <span class="rank">B</span></span>
+            <span>Rank : <span class="rank"></span></span> <!-- B -->
         </div>
         <div class="level-area">
             <div class="level-bar">
-                <p class="level">Lv. <span>12</span></p>
+                <p class="level">Lv. <span></span></p>
                 <div class="bar-area">
                     <div class="base-bar bar"></div>
                     <div class="exp-bar bar"></div>
@@ -163,13 +168,15 @@
             </div>
         </div>
         <div class="finish-button">
-            <a href="front.html"><button onfocus="this.blur();">トップ画面へ戻る</button></a>
+            <a href="front.html"><button onfocus="this.blur();"
+                    onclick="window.onbeforeunload = null;">トップ画面へ戻る</button></a>
         </div>
     </div>
     <footer>
 
     </footer>
     <script src="js/script.js"></script>
+    <script src="js/game.js"></script>
 </body>
 
 </html>

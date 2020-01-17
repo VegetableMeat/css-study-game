@@ -1,0 +1,949 @@
+@charset "utf-8";
+
+/*
+    共通部分
+*/
+* {
+	margin:0;
+    padding:0;
+    color: #2c2c2c;
+}
+
+html{
+    line-height: 1.15;
+}
+
+body {
+    position: relative;
+    color: #2c2c2c;
+    letter-spacing: .05em;
+    background: linear-gradient(to right, #c1e3ff, #a3f8ea);
+    font-family:"游ゴシック Medium",YuGothic,YuGothicM,"Hiragino Kaku Gothic ProN","Hiragino Kaku Gothic Pro",メイリオ,Meiryo,sans-serif;
+    font-weight: 400;
+}
+html {
+	overflow-y:scroll;
+}
+h1,h2,h3,h4,h5,h6 {
+    font-weight: 400;
+}
+p,li,dt,dl {
+	line-height:1.6;
+}
+p {
+    margin:0 0 1em 0;
+    line-height: 2;
+}
+li {
+	list-style-type:none;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+a:link, a:visited, a:hover, a:active {
+    text-decoration: none;
+}
+
+// min-width
+$breakpoint-up: (
+  'sm': 'screen and (min-width: 400px)',
+  'md': 'screen and (min-width: 768px)',
+  'lg': 'screen and (min-width: 1000px)',
+  'xl': 'screen and (min-width: 1200px)',
+) !default;
+
+// max-width
+$breakpoint-down: (
+  'sm': 'screen and (max-width: 399px)',
+  'md': 'screen and (max-width: 767px)',
+  'lg': 'screen and (max-width: 999px)',
+  'xl': 'screen and (max-width: 1199px)',
+) !default;
+@mixin mq-up($breakpoint: md) {
+    @media #{map-get($breakpoint-up, $breakpoint)} {
+        @content;
+    }
+}
+
+@mixin mq-down($breakpoint: md) {
+    @media #{map-get($breakpoint-down, $breakpoint)} {
+        @content;
+    }
+}
+
+$main-color: rgb(57, 150, 214);
+$main-color-hover: rgb(48, 147, 212);
+$main-color-active: rgb(53, 135, 190);
+$sub-color: rgb(27, 79, 208);
+
+header{
+    width: 100vw;
+    height: 60px;
+    padding: 12px 0;
+    text-align: center;
+    background-color: white;
+    filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.3));
+    position: relative;
+    .center{
+        display: flex;
+        justify-content: center;
+    }
+    .header-icon{
+        margin: 0 12px;
+        i{
+            font-size: 36px;
+            color: $main-color;
+        }
+    }
+    .header-title{
+
+        h1{
+            color: $main-color;
+            font-family: 'Orbitron', sans-serif;
+        }
+    }
+    @include mq-down(){
+        height: 46px;
+        .header-title h1{
+            font-size: 20px;
+        }
+        .header-icon i{
+            font-size: 20px;
+        }
+    }
+    .header-nav{
+        position: absolute;
+        top: 14px;
+        right: 20px;
+        ul{
+            display: flex;
+            li{
+                font-size: 18px;
+                padding: 4px 12px;
+                transition: transform 0.2s;
+                .fa-user-alt{
+                    color: $main-color;
+                }
+                .fa-sign-out-alt{
+                    color: rgb(167, 167, 167);
+                }
+                &:hover{
+                    transform: scale(1.4);
+                }
+            }
+        }
+        @include mq-down(){
+            right: 10px;
+            top: 10px;
+            ul{
+                li{
+                    font-size: 14px;
+                    padding: 4px 8px;
+                }
+            }
+        }
+    }
+}
+
+#main-body{
+    width: 92vw;
+    max-width: 1000px;
+    min-height: 100vh;
+    margin: 40px 4vw;
+    padding: 20px 40px;
+    background-color: rgb(241, 251, 255);
+    filter: drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.3));
+    transition: filter 0.2s ease-in-out;
+    @include mq-up(){
+        margin: 40px auto;
+    }
+    @include mq-down(){
+        padding: 20px 10px;
+        margin: 20px 2vw;
+        width: 96vw;
+    }
+}
+
+button{
+    font-size: 28px;
+    padding: 4px 12px;
+    color: white;
+    background-color: skyblue;
+    border: 1px solid rgba(255, 255, 255, 0);
+    border-radius: 12px;
+    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.4));
+    transition: .2s ease-in-out;
+    &:hover{
+        background-color: $main-color-hover; 
+    }
+    &:active{
+        background-color: $main-color-active; 
+        filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.4));
+    }
+}
+
+
+/*
+    game.html
+*/
+.game-header{
+    margin: 40px 40px 20px;
+    border-bottom: 3px solid $main-color;
+    padding-bottom: 12px;
+    @include mq-down(){
+        margin: 20px 20px 0;
+    }
+    .game-title{
+        text-align: center;
+        h1{
+            font-size: 28px;
+            color: rgb(100, 100, 100);
+            @include mq-down(){
+                font-size: 20px;
+            }
+        }
+    }
+}
+
+.start-before-area{
+    text-align: center;
+    .start-button{
+        margin-top: 10vh;
+        button{
+            font-size: 42px;
+            padding: 12px 28px;
+        }
+    }
+    .warn-message{
+        margin-top: 20px;
+        p{
+            font-size: 16px;
+            color: rgb(230, 73, 46);
+        }
+    }
+}
+
+.game-area{
+    display: none;
+    margin-top: 40px;
+    h2, p{
+        color: rgb(121, 121, 121);
+    }
+}
+
+.question-area{
+    display: inline-block;
+    width: 100%;
+    .game-count{
+        text-align: right;
+        font-size: 18px;
+        span{
+            color: $sub-color;
+            font-weight: 600;
+        }
+    }
+    h2{
+        padding-bottom: 12px;
+        border-bottom: 1.5px solid rgba(0,0,0,0.2)
+    }
+}
+
+.user-answer-area, .user-input-area{
+    h2{
+        margin-bottom: 12px;
+    }
+}
+
+.user-answer-area{
+    margin: 40px 0;
+    float: left;
+    .output-css-area{
+        position: relative;
+        width: 30vw;
+        height: 30vw;
+        max-height: 300px;
+        max-width: 300px;
+        background: linear-gradient(135deg, #e2e2e2, #999999);
+        filter: drop-shadow(4px 4px 6px rgba(0,0,0,0.3));
+        margin-top: 42px;
+        position: relative;
+        border-radius: 0 0 4px 4px;
+        .web-area{
+            position: absolute;
+            top: -28px;
+            left: 0;
+            width: 100%;
+            height: 28px;
+            border-radius: 4px 4px 0 0;
+            background-color: black; 
+            .circle{
+                span{
+                    position: absolute;
+                    top: 3px;
+                    left: 4px;
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 8px;
+                    background-color: rgb(80, 80, 80);
+                }
+                .two{
+                    left: 12px;
+                }
+                .three{
+                    left: 20px;
+                }
+            }
+            .tab{
+                position: absolute;
+                top: 2px;
+                left: 40px;
+                width: 60px;
+                height: 12px;
+                border-radius: 3px 3px 0 0;
+                background-color: rgb(80, 80, 80);
+                .file-name{
+                    top: 2px;
+                    left: 8px;
+                    font-size: 8px;
+                    transform: scale(0.6);
+                    color: white;
+                    font-weight: 400;
+                }
+                .plus{
+                    position: absolute;
+                    color: white;
+                    top: -4px;
+                    left: 62px;
+                    transform: scale(0.5);
+                }
+            }
+            .bottom-area{
+                position: absolute;
+                top: 12px;
+                left: 0;
+                width: 100%;
+                height: 16px;
+                border-radius: 0;
+                background-color: rgb(80, 80, 80);
+                i{
+                    color: white;
+                    font-size: 8px;
+                    transform: scale(0.6) translate(4px, -8px);
+                }
+            }
+            .url{
+                position: absolute;
+                top: 2px;
+                left: 70px;
+                right: 10px;
+                height: 10px;
+                border-radius: 10px;
+                background-color: black;
+                span{
+                    position: absolute;
+                    color: white;
+                    font-size: 8px;
+                    transform: scale(0.6) translate(-60px, 0px);
+                }
+                .fa-star{
+                    position: absolute;
+                    right: 2px;
+                    top: 0;
+                    transform: scale(0.6);
+                }
+            }
+            
+        }
+        #object{
+
+        }
+    }
+    @include mq-down(){
+        float: none;
+        margin: 20px 0;
+        .output-css-area{
+            width: calc(100vw - 4vw - 20px);
+            height: calc(100vw - 4vw - 20px);
+        }
+    }
+}
+
+.user-input-area{
+    margin: 40px 0 40px 40px;
+    .code-area{
+        position: relative;
+        padding: 48px 12px;
+        border-radius: 8px 8px 2px 2px;
+        background: rgb(105, 105, 105);
+        max-height: 328px;
+        min-height: 200px;
+        height: calc(30vw + 42px);
+        width: 50vw;
+        max-width: 570px;
+        @include mq-down(){
+            padding: 32px 8px;
+            max-height: 600px;
+            width: 90vw;
+            max-width: 700px;
+        }
+        .code-area-header{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 28px;
+            border-radius: 8px 8px 0 0;
+            background-color: rgb(53, 53, 53);
+        }
+        .css-tab, .html-tab{
+            z-index: 1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 140px;
+            height: 28px;
+            border-radius: 8px 8px 0 0;
+            transition: 0.2s ease-in-out;
+        }
+        .css-tab{
+            background-color: rgb(90, 90, 90);
+        }
+        .html-tab{
+            background-color: rgb(70, 70, 70);
+            span{
+                opacity: 0.5;
+            }
+        }
+        .file-name, .sharp{
+            z-index: 2;
+            position: absolute;
+            top: 8px;
+            left: 30px;
+            font-size: 12px;
+            color: white;
+        }
+        .sharp{
+            color: $main-color;
+            font-weight: 900;
+            left: 16px;
+            font-size: 14px;
+        }
+        .code-area-header.html-code{
+            .html-tab{
+                position: relative;
+                left: 145px;
+            }
+            .tag{
+                position: absolute;
+                left: 6px;
+                top: 6px;
+                font-size: 14px;
+                font-weight: bold;
+                color: orange;
+                transform: scaleX(0.6);
+            }
+        }
+        i{
+            position: absolute;
+            top: 6px;
+            right: 12px;
+            font-size: 18px;
+            font-weight: 900;
+        }
+        *{
+            color: white;
+            font-weight: 300;
+            letter-spacing: 1.5px;
+        }
+        .comment{
+            color: rgb(161, 161, 161);
+        }
+        .id-name{
+            color: rgb(173, 184, 221);
+        }
+    }
+    .css, .html{
+        transition: 0.3s ease-in-out;
+    }
+    .html{
+        position: absolute;
+        display: none;
+        .red{
+            color: rgb(252, 118, 109);
+        }
+        .yellow{
+            color: rgb(240, 184, 80);
+        }
+    }
+    .input-css{
+        padding: 0 0 0 20px;
+        @include mq-down(){
+            padding: 0 0 0 10px;
+        }
+        input{
+            width: 45%;
+            font-size: 12.5px;
+            padding: 2px 4px;
+            margin: 4px 4px;
+            border: 2px solid #ddd;
+            border-radius: 3px;
+            color: rgb(77, 77, 77);
+            font-weight: 300;
+            &:focus{
+                border: 2px solid $sub-color; 
+                z-index: 10;
+                outline: 0;
+            }
+            @include mq-down(){
+                font-size: 10.5px;
+            }
+        }
+    }
+}
+
+.run-button{
+    text-align: right;
+    margin-top: 20px;
+    button{
+        font-size: 24px;
+        padding: 4px 48px;
+    }
+}
+
+.error-message{
+    margin: 40px 0 40px 40px;
+    h3, p{
+        color: rgb(230, 73, 46);
+    }
+    h3{
+        display: inline;
+        padding-bottom: 4px;
+        font-size: 24px;
+        border-bottom: 3px double red;
+    }
+    p{
+        margin-top: 8px;
+        font-size: 16px;
+    }
+}
+
+.user-input-area{
+    display: inline-block;
+    width: calc(100% - 30vw - 40px);
+    @include mq-down(){
+        margin: 20px 0 0;
+        width: 100%;
+    }
+}
+
+.modal, .modal-result{
+    display: none;
+    position: fixed;
+    top: 38vh;
+    left: 0;
+    width: 100vw;
+    padding: 40px;
+    box-shadow: #2c2c2c;
+    @include mq-down(){
+        top: 32vh;
+    }
+}
+
+.clear-message, .next-button{
+    text-align: center;
+    margin: 0 0 20px;
+}
+
+.clear-message, .result-message{
+    clear: both;
+    position: relative;
+    padding: 12px 20px;
+    border-bottom: solid 2px $main-color;
+    border-top: solid 2px $main-color;
+    h3{
+        display: inline;
+        color: $main-color;
+        font-weight: 600;
+        font-size: 32px;
+        @include mq-down(){
+            font-size: 24px;
+        }
+    }
+}
+
+.next-button, .finish-button{
+    button{
+        padding: 16px 48px;
+        border: 0;
+        background: linear-gradient(to bottom,rgb(0, 255, 191),$main-color)
+    }
+}
+
+.modal-result{
+    display: none;
+    text-align: center;
+    top: 60px;
+    @include mq-down(){
+        top: 10px;
+    }
+    .result-time{
+        margin: 12px 0;
+        padding: 12px;
+        span{
+            color: black;
+            padding: 12px;
+            font-size: 22px;
+            border-top: solid 1px $main-color;
+            border-bottom: solid 1px $main-color;            
+            @include mq-down(){
+                font-size: 16px;
+            }
+        }
+    }
+    .result-rank{
+        padding: 24px 0 32px;
+        span{
+            font-size: 28px;
+        }
+        .rank{
+            color: red;
+        }
+    }
+    .level-bar{
+        .level{
+            line-height: 1;
+            margin-top: 10px;
+            font-size: 22px;
+        }
+        .bar-area{
+            margin: 8px 20px;
+            position: relative;
+            height: 30px;
+        }
+        .bar{
+            position: absolute;
+            width: 100%;
+            height: 20px;
+            border-radius: 12px;
+            background: rgb(231, 231, 231);
+        }
+        .exp-bar{
+            min-width: 20px;
+            transition: width 1.5s ease-in-out;
+            width: 0;
+            background: linear-gradient(to right, rgb(119, 223, 51), rgb(47, 224, 186));
+        }
+        .level-up-message{
+            opacity: 0;
+            transform: translateY(-120px);
+            font-size: 52px;
+            transition: 0.6s ease-in-out;
+            span{
+                color: rgb(233, 233, 59);
+                filter: drop-shadow(3px 2px 2px rgb(44, 44, 44));
+            }
+        }
+    }
+    .finish-button{
+
+        button{
+            padding: 8px 24px;
+        }
+    }
+}
+
+
+/*
+    front.html
+*/
+.game-list{
+    margin: 40px;
+    *{
+        color: rgb(133, 133, 133);
+    }
+    .game-card.easy-mode{
+        background: linear-gradient(to right, rgb(247, 247, 219), rgb(215, 245, 235));
+    }
+    .game-card.normal-mode{
+        background: linear-gradient(to right, rgb(217, 242, 247), rgb(212, 219, 243));
+    }
+    .game-card.hard-mode{
+        background: linear-gradient(to right, rgb(232, 216, 245), rgb(238, 207, 209));
+    }
+    .game-card{
+        margin-bottom: 24px;
+        padding: 28px;
+        border-radius: 8px;
+        background: linear-gradient(to bottom, rgb(225, 245, 233), rgb(223, 231, 245));
+        filter: drop-shadow(6px 6px 4px rgba(99, 99, 99, 0.404)) hue-rotate(0deg);
+        transition: filter 0.3s;
+        &:hover{
+            filter: drop-shadow(3px 2px 2px rgba(99, 99, 99, 0.555)) hue-rotate(30deg);
+        }
+    }
+    .game-card-title{
+        padding-bottom: 8px;
+        margin-bottom: 12px;
+        border-bottom: double 4px rgba(68, 68, 68, 0.5);
+        h2{
+            font-size: 22px;
+            color: rgb(45, 148, 161);
+        }
+    }
+    .game-desc{
+        h3{
+            font-size: 16px;
+        }
+        p{
+            font-size: 13px;
+        }
+    }
+    .game-info{
+        font-size: 12px;
+        display: flex;
+        flex-wrap:wrap;
+        flex-direction: row-reverse;
+        div{
+            display: inline;
+            margin: 0 16px 0 0;
+            padding: 4px 12px;
+            border-bottom: 1px solid rgb(179, 179, 179);
+            color: rgb(128, 128, 128);
+            span{
+                color: rgb(128, 128, 128);
+            }
+        }
+    }
+}
+
+
+/*
+    register.html login.html
+*/
+#register, #login{
+    header{
+        margin-top: 10vh;
+        background-color: rgba(0,0,0,0);
+        filter: drop-shadow(0 0 0 rgba(0,0,0,0));
+        i, h1{
+            font-size: 36px;
+            @include mq-down(){
+                font-size: 28px;
+            }
+        }
+        i{
+            margin-top: 4px;
+        }
+    }
+    #main-body{
+        max-width: 600px;
+        margin: 40px auto 20px;
+        min-height: 100px;
+        padding: 50px 20px;
+        background-color: white;
+        @include mq-down(){
+            padding: 40px 12px;
+            width: 90vw;
+            max-width: 450px;
+        }
+    }
+    .input-area-header{
+        margin: 0 20px 12px;
+        padding-bottom: 12px;
+        text-align: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.185);
+        h2{
+            font-size: 26px;
+            color: rgb(133, 133, 133);
+            @include mq-down(){
+                font-size: 22px;
+            }
+        }
+    }
+    .input-area{
+        margin: 20px 0;
+        .input-item{
+            padding: 8px 20px;
+        }
+        .input-label{
+            font-size: 18px;
+            color: rgb(134, 134, 134);
+            @include mq-down(){
+                font-size: 14px;
+            }
+        }
+        .input-content{
+            position: relative;
+            input{
+                background: #f3f3f3;
+                font-size: 18px;
+                width: 100%;
+                border: 1px solid rgb(255, 255, 255);
+                border-radius: 4px;
+                margin: 8px 0;
+                outline: none;
+                padding: 8px 8px 8px 40px;
+                box-sizing: border-box;
+                transition: 0.3s;
+                &::placeholder{
+                    color: rgb(204, 204, 204);
+                }
+                &:hover{
+                    background: rgb(230, 230, 230);
+                }
+                &:focus{
+                    border: 1px solid rgb(0, 153, 255);
+                    background: white;
+                }
+            }
+            i{
+                position: absolute;
+                left: 0;
+                top: 10px;
+                padding: 9px 8px;
+                color: #aaa;
+            }
+        }
+    }
+    .register-button, .login-button{
+        text-align: center;
+        margin: 0 20px;
+        button{
+            font-size: 24px;
+            background: rgb(85, 230, 140);
+            padding: 6px 32px;
+            cursor: pointer;
+            transition: background 0.3s;
+            &:hover{
+                background: rgb(0, 199, 76);
+            }
+        }
+    }
+    .login-link, .register-link{
+        margin: 20px 0 0 20px;
+        text-align: right;
+        a{
+            color: #1d66aa;
+            transition: color 0.2s;
+            &:hover{
+                color: #144572;
+            }
+        }
+    }
+}
+
+/*
+    profile.html
+*/
+#profile{
+    #main-body{
+        max-width: 800px;
+        margin: 40px auto 20px;
+        min-height: 100px;
+        padding: 40px 80px;
+        background-color: white;
+        @include mq-down(){
+            width: 80vw;
+            max-width: 450px;
+            padding: 20px;
+        }
+    }
+    .label{
+        padding: 4px 12px;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.295);
+        font-size: 22px;
+        color: rgb(8, 122, 156);
+        font-weight: 600;
+        @include mq-down(){
+            font-size: 14px;
+        }
+    }
+    .profile-area>div{
+        margin: 24px 0;
+    }
+    .profile-area{
+        p, span{
+            color: rgb(126, 126, 126);
+            font-size: 18px;
+            @include mq-down(){
+                font-size: 12px;
+            }
+        }
+        p{
+            padding: 4px 12px;
+            margin-bottom: 0;
+        }
+        .level-bar{
+            .level{
+                line-height: 1;
+                margin-top: 12px;
+            }
+            .bar-area{
+                margin: 8px 20px;
+                position: relative;
+                height: 30px;
+            }
+            .bar{
+                position: absolute;
+                width: 100%;
+                height: 20px;
+                border-radius: 12px;
+                background: rgb(231, 231, 231);
+            }
+            .exp-bar{
+                min-width: 20px;
+                transition: width 1.5s ease-in-out;
+                width: 0;
+                background: linear-gradient(to right, rgb(119, 223, 51), rgb(47, 224, 186));
+            }
+        }
+        .mode-rank{
+
+            div{
+                margin: 4px 0;
+            }
+        }
+    }
+    .history-area{
+
+        .time-select{
+            margin: 20px;
+            text-align: right;
+            font-size: 18px;
+            select{
+                font-size: 18px;
+            }
+            @include mq-down(){
+                font-size: 14px;
+                select{
+                    font-size: 14px;
+                }
+            }
+        }
+        .history-list{
+            .history-card>div{
+                padding: 4px;
+                margin: 8px 12px;
+                border-bottom: solid 1px rgb(219, 219, 219);
+            }
+            .history-card>div, span{
+                font-size: 14px;
+                color: rgb(110, 110, 110);
+                @include mq-down(){
+                    font-size: 10px;
+                }
+            }
+            .history-card{
+                padding: 12px 20px;
+                margin: 0 12px 20px;
+                border-radius: 8px;
+                background: linear-gradient(to right, rgb(226, 247, 255), rgb(243, 232, 255));
+                filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.281));
+                @include mq-down(){
+                    padding: 8px;
+                    margin: 0 4px 12px;
+                }
+            }
+        }
+    }
+}

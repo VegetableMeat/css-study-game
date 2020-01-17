@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS Study Game</title>
+    <link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+
+<body id="profile">
+    <header>
+        <div class="center">
+
+            <div class="header-icon">
+                <i class="fab fa-css3-alt"></i>
+            </div>
+            <a href="front.html">
+                <div class="header-title">
+                    <h1>CSS Study Game</h1>
+                </div>
+            </a>
+        </div>
+        <nav class="header-nav">
+            <ul>
+                <li class="profile"><a href="profile.html"><i class="text-primary fas fa-user-alt"></i></a></li>
+                <li class="exit"><i class="fas fa-sign-out-alt"></i></a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="game-header">
+        <div class="game-title">
+            <h1>プロフィール</h1>
+        </div>
+    </div>
+    <div id="main-body">
+        <div class="profile-area">
+            <div class="user-id">
+                <div class="label">ユーザーID</div>
+            </div>
+            <div class="status">
+                <div class="label">称号</div>
+            </div>
+            <div class="level-area">
+                <div class="level">
+                    <div class="label">レベル</div>
+                </div>
+                <div class="level-bar">
+                    <p class="level-value">Lv. </p>
+                    <div class="bar-area">
+                        <div class="base-bar bar"></div>
+                        <div class="exp-bar bar"></div>
+                    </div>
+                    <p class="total-exp">合計獲得経験値 : </p>
+                    <p class="next-exp">次のレベルまでの経験値 : </p>
+                </div>
+            </div>
+            <div class="mode-rank">
+                <div class="label">ゲームモードごとの過去最高ランク</div>
+                <div class="easy-mode"></div>
+                <div class="normal-mode"></div>
+                <div class="hard-mode"></div>
+            </div>
+        </div>
+        <div class="history-area">
+            <div class="label">プレイ履歴</div>
+            <div class="time-select">
+                表示期間　過去
+                <select name="period" id="period-menu">
+                    <option value="1">1日</option>
+                    <option value="2">１週間</option>
+                    <option value="3" selected>１ヶ月</option>
+                    <option value="4">1年</option>
+                    <option value="5">全て</option>
+                </select>
+            </div>
+            <div class="history-list">
+                <div class="history-card">
+                    記録なし
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <footer>
+
+    </footer>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

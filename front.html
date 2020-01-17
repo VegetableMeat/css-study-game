@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS Study Game</title>
+    <link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+
+<body id="front">
+    <header>
+        <div class="center">
+            <div class="header-icon">
+                <i class="fab fa-css3-alt"></i>
+            </div>
+            <a href="front.html">
+                <div class="header-title">
+                    <h1>CSS Study Game</h1>
+                </div>
+            </a>
+        </div>
+        <nav class="header-nav">
+            <ul>
+                <li class="profile"><a href="profile.html"><i class="text-primary fas fa-user-alt"></i></a></li>
+                <li class="exit"><i class="fas fa-sign-out-alt"></i></a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="game-header">
+        <div class="game-title">
+            <h1>ゲーム一覧</h1>
+        </div>
+    </div>
+    <div id="main-body">
+        <div class="game-list-header">
+
+        </div>
+        <div class="game-list">
+            <div class="game-card easy-mode">
+                <a href="game.html">
+                    <div class="game-card-title">
+                        <h2>CSS初級編</h2>
+                    </div>
+                    <div class="game-desc">
+                        <h3>使用プロパティ</h3>
+                        <p>width , height , border , border-radius , border-color etc...</p>
+                    </div>
+                    <div class="game-info">
+                        <div class="goal-time">
+                            <span>目標タイム : 5分</span>
+                        </div>
+                        <div class="before-max-easy-rank"></div>
+                    </div>
+                </a>
+            </div>
+            <div class="game-card normal-mode">
+                <a href="game.html">
+                    <div class="game-card-title">
+                        <h2>CSS中級編</h2>
+                    </div>
+                    <div class="game-desc">
+                        <h3>使用プロパティ</h3>
+                        <p>filter , opacity , background-color , border-(top,bottom,right,left) etc...</p>
+                    </div>
+                    <div class="game-info">
+                        <div class="goal-time">
+                            <span>目標タイム : 7分</span>
+                        </div>
+                        <div class="before-max-normal-rank">
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="game-card hard-mode">
+                <a href="game.html">
+                    <div class="game-card-title">
+                        <h2>CSS上級編</h2>
+                    </div>
+                    <div class="game-desc">
+                        <h3>使用プロパティ</h3>
+                        <p>transform(ratate,translate,scale,skew) , border-style , background(line-gradient) etc...</p>
+                    </div>
+                    <div class="game-info">
+                        <div class="goal-time">
+                            <span>目標タイム : 10分</span>
+                        </div>
+                        <div class="before-max-hard-rank">
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <footer>
+
+    </footer>
+    <script src="js/script.js"></script>
+    <script src="js/front.js"></script>>
+</body>
+
+</html>

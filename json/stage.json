@@ -3,50 +3,162 @@
     [
       {
         "type": "三角形",
-        "default": { "border-color":"transparent transparent #fff transparent" },
-        "property": [ "border-width" ]
+        "default": {
+          "border-color": "transparent transparent #fff transparent"
+        },
+        "property": [
+          "border-width"
+        ]
       },
       {
         "type": "四角形",
-        "default": { "border-color":"#fff", "background":"#fff" },
-        "property": [ "width", "height" ]
+        "default": {
+          "border-color": "#fff",
+          "background": "#fff"
+        },
+        "property": [
+          "width",
+          "height"
+        ]
       },
       {
         "type": "円",
-        "default": { "border-color":"#fff", "background":"#fff" },
-        "property": [ "width", "height", "border-radius" ]
+        "default": {
+          "border-color": "#fff",
+          "background": "#fff"
+        },
+        "property": [
+          "width",
+          "height",
+          "border-radius"
+        ]
       }
     ],
     [
       {
         "type": "三角形",
-        "property": [ "border-width", "border-color" ]
+        "property": [
+          "border-width",
+          "border-color"
+        ]
       },
       {
         "type": "四角形",
-        "property": [ "width", "height", "background-color" ]
+        "property": [
+          "width",
+          "height",
+          "background-color"
+        ]
       },
       {
         "type": "円",
-        "property": [ "width", "height", "border-radius", "background-color" ]
+        "property": [
+          "width",
+          "height",
+          "border-radius",
+          "background-color"
+        ]
       }
     ],
     [
       {
         "type": "三角形",
-        "property": [ "border-width", "border-color", "transform" ]
+        "property": [
+          "border-width",
+          "border-color",
+          "transform"
+        ]
       },
       {
         "type": "四角形",
-        "property": [ "width", "height", "background-color", "transform" ]
+        "property": [
+          "width",
+          "height",
+          "background-color",
+          "transform"
+        ]
       },
       {
         "type": "円",
-        "property": [ "width", "height", "border-radius", "background-color", "transform" ]
+        "property": [
+          "width",
+          "height",
+          "border-radius",
+          "background-color",
+          "transform"
+        ]
       }
     ]
   ],
   "config": {
+    "rank": [
+      {
+        "S": [
+          180,
+          500
+        ],
+        "A": [
+          240,
+          300
+        ],
+        "B": [
+          300,
+          200
+        ],
+        "C": [
+          360,
+          100
+        ],
+        "D": [
+          0,
+          50
+        ]
+      },
+      {
+        "S": [
+          300,
+          500
+        ],
+        "A": [
+          360,
+          300
+        ],
+        "B": [
+          420,
+          200
+        ],
+        "C": [
+          480,
+          100
+        ],
+        "D": [
+          0,
+          50
+        ]
+      },
+      {
+        "S": [
+          480,
+          500
+        ],
+        "A": [
+          540,
+          300
+        ],
+        "B": [
+          600,
+          200
+        ],
+        "C": [
+          660,
+          100
+        ],
+        "D": [
+          0,
+          50
+        ]
+      }
+    ],
     "regular": {
       "width": "^([0-9]+px)[ ]*$",
       "height": "^([0-9]+px)[ ]*$",
@@ -74,8 +186,13 @@
       "#fff": "白色"
     },
     "sub-property": [
-      [ "opacity", "filter" ],
-      [ "background" ]
+      [
+        "opacity",
+        "filter"
+      ],
+      [
+        "background"
+      ]
     ]
   }
 }

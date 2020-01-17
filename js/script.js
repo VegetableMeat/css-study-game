@@ -1,574 +1,591 @@
-$(function() {
-    // TODO ローカルストレージに格納されている値を難易度にする
-    // 難易度 初級0、中級1、上級2
-    const diff = 0;
-    var form, timer, sub_property_1, sub_property_2;
-    var answer = {
-        "width":"",
-        "height":"",
-        "filter":"",
-        "opacity":"",
-        "transform":"",
-        "background":"",
-    };
-    var history = {
-        "form":[],
-        "time":[],
-    };
-    var time = 0;
-    var time_add = function() {
-        console.log(time + "秒");
-        time++;
-    };
+$(function () {
 
-    /* --------------------------------------- */
-    /*      スタートボタンが押されたら時間を計測
-    /* --------------------------------------- */
-    $('.start-button button').on('click', function() {
-        createQuestion();
-        timer = setInterval(time_add, 1000);
+    //１レベルごとに必要な経験値
+    const levelUpExp = 1000;
+    //合計獲得経験値（仮データ）
+    var totalExp = 1800;
+
+
+
+    $(".html-tab").click(function () {
+        $(".html-tab").css("background-color", "rgb(90, 90, 90)");
+        $(".css-tab").css("background-color", "rgb(70, 70, 70)");
+        $(".html-tab span").css("opacity", "1");
+        $(".css-tab span").css("opacity", "0.5");
+        $(".code-area .html").css("display", "block");
+        $(".code-area .css").css("display", "none");
+    });
+    $(".css-tab").click(function () {
+        $(".css-tab").css("background-color", "rgb(90, 90, 90)");
+        $(".html-tab").css("background-color", "rgb(70, 70, 70)");
+        $(".css-tab span").css("opacity", "1");
+        $(".html-tab span").css("opacity", "0.5");
+        $(".code-area .html").css("display", "none");
+        $(".code-area .css").css("display", "block");
     });
 
-    /* --------------------------------------- */
-    /*      実行ボタンが押されたら入力チェックをする
-    /* --------------------------------------- */
-    $('.run-button button').on('click', function() {
-        $('.error-message').empty();
 
-        ajax()
-        .done((data) => {
-            var reg = new RegExp('[^0-9]', 'g');
-            var stage = data["class"][diff][form];
-            var result = inputCheck($('.input-css input'), stage["property"], data["config"]["regular"], data["config"]["sub-property"]);
 
-            if(!result[0]) {
-                setErrorMsg(result[1]);
-                return;
-            }
 
-            $('#object')
-            .css({
-                'width':'0',
-                'height':'0',
-                'border-style':'solid',
-                'position':'absolute',
+    //ゲーム中の画面遷移などによるゲーム中断処理
+    var linkUrl;
+    $("#game .profile a").click(function (e) {
+        linkUrl = $(this).attr('href');
+        discontinue(e, linkUrl);
+    });
+    $("#game .exit a").click(function (e) {
+        linkUrl = $(this).attr('href');
+        discontinue(e, linkUrl);
+    });
+    $("#game header .center a").click(function (e) {
+        linkUrl = $(this).attr('href');
+        discontinue(e, linkUrl);
+    });
+    function discontinue(e, linkUrl) {
+        e.preventDefault();
+        swal({
+            title: "注意",
+            text: "画面を離れるとゲームが中断され、ゲームの再開や経験値の獲得ができません。\nよろしいですか？",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((move) => {
+                if (move) {
+                    action();
+                } else {
+
+                }
             });
 
-            // 中央に寄せるため必要
-            if(form == 0) {
-                var border_width = result[1]["border-width"].split(" ");
+        function action() {
+            location.href = linkUrl;
+        }
+        setTimeout(action, 999999);
+    }
 
-                $('#object')
-                .css({
-                    'top':'calc(50% - ' + (Number(border_width[2].replace(reg, '')) / 2) + 'px)',
-                    'left':'calc(50% - ' + ((Number(border_width[1].replace(reg, '')) + Number(border_width[3].replace(reg, ''))) / 2) + 'px)',
+    const errorMessage = {
+        "existId": "*既に使用されているユーザーIDが入力されています。",
+        "retypeDismatchPw": "*再入力のパスワードが異なっています。",
+        "unregisterId": "*入力されたユーザーIDは登録されていません。",
+        "diffPw": "*ユーザー名、またはパスワードが違います。",
+        "badId": "*ユーザーIDに不正な文字が使用されています。英数字のみで入力してください。",
+        "longId": "*ユーザーIDの文字数が超過しています。30文字以内で入力してください。",
+        "shortId": "*ユーザーIDの文字数が少なすぎます。6文字以上で入力してください。",
+        "badPw": "*パスワードに不正な文字が使用されています。英数字のみで入力してください。",
+        "longPw": "*パスワードの文字数が超過しています。30文字以内で入力してください。",
+        "shortPw": "*パスワードの文字数が少なすぎます。6文字以上で入力してください。"
+    };
+    const errorInput = {
+        "existId": "user-id",
+        "retypeDismatchPw": "user-pw-2",
+        "unregisterId": "user-id",
+        "diffPw": "user-pw-1",
+        "badId": "user-id",
+        "longId": "user-id",
+        "shortId": "user-id",
+        "badPw": "user-pw-1",
+        "longPw": "user-pw-1",
+        "shortPw": "user-pw-1"
+    }
+    var errorFlg = {
+        "existId": false,
+        "retypeDismatchPw": false,
+        "unregisterId": false,
+        "diffPw": false,
+        "badId": false,
+        "longId": false,
+        "shortId": false,
+        "badPw": false,
+        "longPw": false,
+        "shortPw": false
+    };
+
+    const apiUrl = "https://css-study-game-webapi.herokuapp.com";
+    var allErrorFlg = false;
+    var errorMessageHtml = "";
+
+    /**
+     * 新規登録ボタン押下時に実行
+     */
+    $(".register-button").click(function () {
+        const button = $(this);
+        const userID = $('[type=text]').val();
+        const password = $('.user-pw-1').find('[type=password]').val();
+        const retypePassword = $('.user-pw-2').find('[type=password]').val();
+
+        button.attr("disabled", true);
+
+        resetError();
+        vaidRegister(userID, password, retypePassword);
+        errorFlagCheck();
+
+        //エラーがなかった場合の処理
+        if (allErrorFlg === false) {
+            // 各フォームから値を取得してJSONデータを作成
+            let data = {
+                user_id: userID,
+                password: password
+            };
+
+            // WebAPIアクセス実行
+            $.ajax({
+                type: "post",
+                url: `${apiUrl}/signup`,
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                dataType: "json",
+                async: false,
+            })
+                .done(function (result) {
+                    errorFlg["diffPw"] = false;
+                    localStorage.setItem('token', result.token)
+                    window.location.href = "front.html";
+                }).fail(function () {
+                    errorFlg["diffPw"] = true;
+                    errorFlagCheck();
+                    errorDisplay();
                 });
-            } else {
-                $('#object')
-                .css({
-                    'top':'calc(50% - ' + (Number(result[1]["height"].replace(reg, '')) / 2) + 'px)',
-                    'left':'calc(50% - ' + (Number(result[1]["width"].replace(reg, '')) / 2) + 'px)',
-                });
-            }
-            
-            // 初級のみ色等の指定がないので#fff固定にする
-            if(diff == 0) {
-                for(key in stage["default"]) {
-                    $('#object').css(key, stage["default"][key]);
-                }
-            }
-
-            for(key in result[1]) {
-                $('#object').css(key, result[1][key]);
-                if(form == 0 && key == "border-color") {
-                    $('#object').css(key, "transparent transparent " + result[1][key] + " transparent");
-                }
-                if(key == "background-color") {
-                    $('#object').css("border-color", result[1][key]);
-                }
-                if(key == "background") {
-                    $('#object').css("border-style", "none");
-                }
-            }
-
-            // 答え合わせ
-            clearJudge(result, stage["property"], data["config"]["sub-property"]);
-        })
-        .fail((data) => {
-            console.log("通信に失敗しました。");
-            console.log(data);
-        });
-    });
-
-    $('.next-button button').on('click', function() {
-        // $(".modal").css("display", "none");
-        // $("#main-body").css("filter", "none");
-        // $(".game-header").css("filter", "none");
-        init();
-    });
-
-    /* --------------------------------------- */
-    /*              問題文を生成
-    /* --------------------------------------- */
-    function createQuestion() {
-        /* --------------------------------------- */
-        /*              問題を作成
-        /* --------------------------------------- */
-        if(history["form"] == "") {
-            form = Math.floor(Math.random() * 3);
-            history["form"].push(form);
         } else {
-            while(true) {
-                var num = 0;
-                form = Math.floor(Math.random() * 3);
+            errorDisplay();
+        }
 
-                for(var i = 0; i < history["form"].length; i++) {
-                    if(history["form"][i] == form) {
-                        break;
-                    }
-                    num++;
-                }
+        button.attr("disabled", false)
+    });
 
-                // 一度出た形は記憶しておく
-                if(num == history["form"].length) {
-                    history["form"].push(form);
-                    break;
-                }
+    /**
+     * ログインボタン押下時に実行
+     */
+    $(".login-button button").click(function () {
+        const button = $(this);
+        const userID = $('[type=text]').val();
+        const password = $('.user-pw-1').find('[type=password]').val();
+
+        button.attr("disabled", true);
+
+        resetError();
+        vaidLogin(userID, password);
+        errorFlagCheck();
+
+        //エラーがなかった場合の処理
+        if (allErrorFlg === false) {
+            // 各フォームから値を取得してJSONデータを作成
+            let data = {
+                user_id: userID,
+                password: password
+            };
+
+            // WebAPIアクセス実行
+            $.ajax({
+                type: "post",
+                url: `${apiUrl}/login`,
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                dataType: "json",
+                async: false,
+            })
+                .done(function (result) {
+                    errorFlg["diffPw"] = false;
+                    localStorage.setItem('token', result.token)
+                    localStorage.setItem('id', userID)
+                    window.location.href = "front.html";
+                })
+                .fail(function () {
+                    errorFlg["diffPw"] = true;
+                    errorFlagCheck();
+                    errorDisplay();
+                });
+        } else {
+            errorDisplay();
+        }
+
+        button.attr("disabled", false)
+    });
+
+    /**
+     * 関数 : エラーフラグとメッセージの初期化
+     */
+    function resetError() {
+        errorMessageHtml = "";
+        allErrorFlg = false;
+        for (key in errorFlg) {
+            errorFlg[key] = false;
+            $("." + errorInput[key] + " input").css("border", "solid 1px white");
+        }
+    }
+
+    /**
+     * 関数 : エラーフラグからメッセージを生成
+     */
+    function errorFlagCheck() {
+        for (key in errorFlg) {
+            if (errorFlg[key] === true) {
+                allErrorFlg = true;
+                errorMessageHtml = errorMessageHtml + errorMessage[key] + "\n\n";
+
+                $("." + errorInput[key] + " input").css("border", "solid 1px red");
             }
         }
-        
-        // TODO widthとheightの上限下限を決める
-        answer["width"] = (Math.floor(Math.random() * 20) * 10) + 50;
-        answer["height"] = (Math.floor(Math.random() * 20) * 10) + 50;
-        
-        if(diff != 0) {
-            // opacityかfilterか決定
-            sub_property_1 = Math.floor(Math.random() * 2);
+    }
 
-            var colors_3 = [];
-            var colors_6 = [];
+    /**
+     * 関数 : エラーメッセージを表示
+     */
+    function errorDisplay() {
+        swal({
+            title: "Error!",
+            text: errorMessageHtml,
+            icon: "warning"
+        })
+            .then((ok) => {
+                if (ok) {
 
-            if(sub_property_1) {
-                answer["filter"] = Math.floor(Math.random() * 10) + 1;
+                } else {
+
+                }
+            });
+    }
+
+    /**
+     * 関数 : 新規登録フォームのValidate
+     * @param {string} userID 
+     * @param {string} password 
+     * @param {string} retypePassword 
+     */
+    function vaidRegister(userID, password, retypePassword) {
+        if (userID.length < 6) {
+            errorFlg["shortId"] = true;
+        } else {
+            errorFlg["shortId"] = false;
+            if (userID.length > 30) {
+                errorFlg["longId"] = true;
             } else {
-                answer["opacity"] = "0.5";
-            }
-
-            for(var i = 0; i < 3; i++) {
-                if(Math.floor(Math.random() * 2)) {
-                    colors_3[i] = "0";
+                errorFlg["longId"] = false;
+                if (!userID.match(/^[A-Za-z0-9]+$/)) {
+                    errorFlg["badId"] = true;
                 } else {
-                    colors_3[i] = "f";
-                }
-            }
-
-            for(var i = j = 0; i < 3; i++) {
-                colors_6[j] = colors_3[i];
-                colors_6[j + 1] = colors_3[i];
-                j = j + 2;
-            }
-
-            answer["color-3"] = "#" + colors_3.join("");
-            answer["color-6"] = "#" + colors_6.join("");
-
-            if(diff == 2) {
-                var transform = Math.floor(Math.random() * 3);
-                var rotate_val = (Math.floor(Math.random() * 9) * 5) + 10;
-                var translate_x = Math.floor(Math.random() * 10) + 1;
-                var translate_y = Math.floor(Math.random() * 10) + 1;
-                var scale_x = ((Math.floor(Math.random() * 9) + 1) / 10).toFixed(1);
-                var scale_y = ((Math.floor(Math.random() * 9) + 1) / 10).toFixed(1);                
-                sub_property_2 = 0;
-
-                switch(transform) {
-                    case 0:
-                        answer["transform"] = { "rotate" : rotate_val };
-                        break;
-                    case 1:
-                        answer["transform"] = { "translate" : { "x" : translate_x, "y" : translate_y } };
-                        break;
-                    case 2:
-                        answer["transform"] = { "scale" : { "x" : scale_x, "y" : scale_y } };
-                        break;
-                }
-
-                if(form != 0) {
-                    var reverse_color_3 = answer["color-3"].replace(/#/, '').split("");
-                    var reverse_color_6 = answer["color-6"].replace(/#/, '').split("");
-                    answer["background"] = { "color_3" : [ answer["color-3"], "#" ],
-                                             "color_6" : [ answer["color-6"], "#" ] };
-
-                    for(var i = 0; i < reverse_color_3.length; i++) {
-                        switch(reverse_color_3[i]) {
-                            case "f":
-                                answer["background"]["color_3"][1] += "0";
-                                break;
-                            case "0":
-                                answer["background"]["color_3"][1] += "f";
-                                break;
-                        }
-                    }
-
-                    for(var i = 0; i < reverse_color_6.length; i++) {
-                        switch(reverse_color_6[i]) {
-                            case "f":
-                                answer["background"]["color_6"][1] += "0";
-                                break;
-                            case "0":
-                                answer["background"]["color_6"][1] += "f";
-                                break;
-                        }
-                    }
+                    errorFlg["badId"] = false;
+                    $.ajax({
+                        type: "get",
+                        url: `${apiUrl}/user_check/${userID}`,
+                        contentType: 'application/json',
+                        dataType: "json",
+                        async: false,
+                    })
+                        .done(function (result) {
+                            if (result.message == "OK") {
+                                errorFlg["existId"] = false;
+                            } else {
+                                errorFlg["existId"] = true;
+                            }
+                        })
+                        .fail(function () {
+                        });
                 }
             }
         }
 
-        ajax()
-        .done((data) => {
-            var stage = data["class"][diff][form];
-            var config = data["config"];
-
-            // 問題文の作成
-            var question = "<p>横" + answer["width"] + "px、縦" + answer["height"] + "px";
-
-            if(diff != 0) {
-                question += "、色は";
-
-                if(answer["background"].length != 0) {
-                    question += "上から<span style=\"color: " + answer["color-3"] + "; filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.4));\">" + data["config"]["color"][answer["color-3"]] + "</span>";
-                    question += "と<span style=\"color: " + answer["background"]["color_3"][1] + "; filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.4));\">" + data["config"]["color"][answer["background"]["color_3"][1]] + "</span>のグラデーション";
+        if (password.length < 6) {
+            errorFlg["shortPw"] = true;
+        } else {
+            errorFlg["shortPw"] = false;
+            if (password.length > 30) {
+                errorFlg["longPw"] = true;
+            } else {
+                errorFlg["longPw"] = false;
+                if (!password.match(/^[A-Za-z0-9]+$/)) {
+                    errorFlg["badPw"] = true;
                 } else {
-                    question += "<span style=\"color: " + answer["color-3"] + "; filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.4));\">" + data["config"]["color"][answer["color-3"]] + "</span>";
-                }
-
-                if(sub_property_1) {
-                    question += "で影付き";
-                } else {
-                    question += "で半透明";
-                }
-
-                if(diff == 2) {
-                    for(key in answer["transform"]) {
-                        switch(key) {
-                            case "rotate":
-                                question += "<br>傾きが" + answer["transform"][key] + "度の";
-                                break;
-                            case "translate":
-                                question += "<br>中心から横に" + answer["transform"][key]["x"] + "px、縦に" + answer["transform"][key]["y"] + "px移動させた";
-                                break;
-                            case "scale":
-                                question += "<br>さらに横の長さを"  + answer["transform"][key]["x"] + "倍に、縦の長さを" + answer["transform"][key]["y"] + "倍にした";
-                                break;
-                        }
-                    }
-                } else {
-                    question += "の";
-                }
-            }
-
-            question += stage["type"] + "を作成してください。";
-            
-            if(sub_property_1 == 1) {
-                question += "<br>影は本体から右に" + answer["filter"] + "px、下に" + answer["filter"] + "pxです";
-                question += "（※影のぼかしと色の指定は不要）";
-            }
-
-            question += "</p>";
-
-            $('.question-text').append(question);
-            
-            // 難易度によってプロパティが増えていくので、増分の値を決める
-            var num = 0;
-
-            if(diff != 0) {
-                num = 1;
-                // 三角形の場合、transformまで
-                if(diff == 2 && form != 0) {
-                    if(answer["background"].length == 0) {
-                        num = 2;
+                    errorFlg["badPw"] = false;
+                    if (password != retypePassword) {
+                        errorFlg["retypeDismatchPw"] = true;
+                    } else {
+                        errorFlg["retypeDismatchPw"] = false;
                     }
                 }
             }
-
-            // inputタグを生成
-            setElement(stage["property"].length + num);
-        })
-        .fail((data) => {
-            console.log("通信に失敗しました。");
-            console.log(data);
-        });
-    }
-
-    /* --------------------------------------- */
-    /*          jsonファイルへの接続情報
-    /* --------------------------------------- */
-    function ajax() {
-        return $.ajax({
-            url: "json/stage.json",
-            type: "GET",
-            dataType: "json",
-            data: { name: "type" },
-        })
-    }
-
-    /* --------------------------------------- */
-    /*              inputタグを生成
-    /* --------------------------------------- */
-    function setElement(stage) {
-        $('.input-css').append("<span>border-style: 'solid'</span><br>");
-
-        for(var i = 0; i < stage; i++) {
-            $('.input-css').append($('<input> : <input>;<br>'));
         }
     }
 
-    /* --------------------------------------- */
-    /*  ユーザが入力したプロパティ、値が正しいか判定
-    /* --------------------------------------- */
-    function inputCheck(input, stage, reg, sub) {
-        var cnt = 0;
-        var property;
-        var result = [];
-        var result_array = [];
+    /**
+     * 関数 : ログインフォームのValidate
+     * @param {string} userID 
+     * @param {string} password 
+     */
+    function vaidLogin(userID, password) {
+        if (userID.length < 6) {
+            errorFlg["shortId"] = true;
+        } else {
+            errorFlg["shortId"] = false;
+            if (userID.length > 30) {
+                errorFlg["longId"] = true;
+            } else {
+                errorFlg["longId"] = false;
+                if (!userID.match(/^[A-Za-z0-9]+$/)) {
+                    errorFlg["badId"] = true;
+                } else {
+                    errorFlg["badId"] = false;
+                }
+            }
+        }
 
-        // 難易度ごとにプロパティを増やす
-        if(diff != 0) {
-            stage.push(sub[0][sub_property_1]);
-            if(diff != 1 && form != 0) {
-                // background-colorとbackgroundは共存できないため、backgroundが指定された場合background-colorを削除する
-                if(answer["background"].length != 0) {
-                    stage = stage.filter(function(val) {
-                        return val !== "background-color";
+        if (password.length < 6) {
+            errorFlg["shortPw"] = true;
+        } else {
+            errorFlg["shortPw"] = false;
+            if (password.length > 30) {
+                errorFlg["longPw"] = true;
+            } else {
+                errorFlg["longPw"] = false;
+                if (!password.match(/^[A-Za-z0-9]+$/)) {
+                    errorFlg["badPw"] = true;
+                } else {
+                    errorFlg["badPw"] = false;
+                }
+            }
+        }
+    }
+
+    // ログアウトアイコン押下に実行
+    $(".fa-sign-out-alt").click(function () {
+        swal({
+            title: "確認",
+            text: "ログアウトしてもよろしいですか？",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((move) => {
+                if (move) {
+                    localStorage.removeItem("token")
+                    window.location.href = "login.html";
+                } else {
+
+                }
+            });
+    });
+
+    /**
+     * 各画面遷移時に実行
+     */
+    $(document).ready(function () {
+        if ("token" in localStorage) {
+            const accessToken = localStorage.getItem('token');
+
+            $.ajax({
+                type: "get",
+                url: `${apiUrl}/play_history/list`,
+                contentType: 'application/json',
+                dataType: "json",
+                async: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", accessToken);
+                },
+            })
+                .fail(function () {
+                    localStorage.removeItem("token")
+                });
+        }
+
+        const pageID = document.body.id
+
+        switch (pageID) {
+            case "front":
+                if (!("token" in localStorage)) {
+                    window.location.href = "login.html";
+                }
+                const accessToken = localStorage.getItem('token');
+                $.ajax({
+                    type: "get",
+                    url: `${apiUrl}/user/me`,
+                    contentType: 'application/json',
+                    dataType: "json",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", accessToken);
+                    },
+                })
+                    .done(function (result) {
+                        console.log(result)
+                        if (result.EasyHighScore === "0") {
+                            $(".before-max-easy-rank").append(`過去最高 Rank : <span>-</span>`);
+                        } else {
+                            $(".before-max-easy-rank").append(`過去最高 Rank : <span>${result.EasyHighScore}</span>`);
+                        }
+                        if (result.NormalHighScore === "0") {
+                            $(".before-max-normal-rank").append(`過去最高 Rank : <span>-</span>`);
+                        } else {
+                            $(".before-max-normal-rank").append(`過去最高 Rank : <span>${result.NormalHighScore}</span>`);
+                        }
+                        if (result.HardHighScore === "0") {
+                            $(".before-max-hard-rank").append(`過去最高 Rank : <span>-</span>`);
+                        } else {
+                            $(".before-max-hard-rank").append(`過去最高 Rank : <span>${result.HardHighScore}</span>`);
+                        }
+
+
+
                     });
+                break;
+            case "game":
+                if (!("token" in localStorage)) {
+                    window.location.href = "login.html";
                 }
-                stage.push(sub[1][sub_property_2]);
-            }
+                break;
+            case "profile":
+                if (!("token" in localStorage)) {
+                    window.location.href = "login.html";
+                } else {
+                    setProfile();
+                }
+                break;
+            case "login":
+                if ("token" in localStorage) {
+                    window.location.href = "front.html";
+                }
+                break;
+            case "register":
+                if ("token" in localStorage) {
+                    window.location.href = "front.html";
+                }
+                break;
         }
+    });
 
-        for(var i = 0; i < input.length; i = i + 2) {
-            cnt = 0;
-            // 入力されたプロパティが存在するかどうか判定
-            $.each(stage, function(index, p) {
-                if(input[i].value == "") {
-                    property = "Empty";
-                    return;
-                } else if(input[i].value == p) {
-                    return;
+    let playHistories = {};
+    let showTimeFlg = new Date()
+
+    /**
+     * 関数 : プロフィールの表示
+     */
+    function setProfile() {
+        const accessToken = localStorage.getItem('token');
+        $.ajax({
+            type: "get",
+            url: `${apiUrl}/user/me`,
+            contentType: 'application/json',
+            dataType: "json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", accessToken);
+            },
+            async: false,
+        })
+            .done(function (result) {
+                const nextLevelExp = result.NextExp;
+                expBarWidth = (levelUpExp - nextLevelExp) / levelUpExp * 100;
+                $("#profile .exp-bar").css("width", expBarWidth + "%");
+
+                $(".level-value").append(`<span>${result.Level}</span>`);
+                $(".total-exp").append(`<span>${result.TotalExp}</span>`);
+                $(".next-exp").append(`<span>${result.NextExp}</span>`);
+                $(".user-id").append(`<p><span>${result.UserID}</span></p>`);
+                $(".status").append(`<p><span>${result.Title}</span></p>`);
+                if (result.EasyHighScore === "0") {
+                    $(".easy-mode").append(`<p>初級編 : <span>記録なし</span></p>`);
+                } else {
+                    $(".easy-mode").append(`<p>初級編 : <span>${result.EasyHighScore}</span></p>`);
                 }
 
-                cnt++;
-                property = input[i].value;
+                if (result.NormalHighScore === "0") {
+                    $(".normal-mode").append(`<p>中級編 : <span>記録なし</span></p>`);
+                } else {
+                    $(".normal-mode").append(`<p>中級編 : <span>${result.NormalHighScore}</span></p>`);
+                }
+
+                if (result.HardHighScore === "0") {
+                    $(".hard-mode").append(`<p>上級編 : <span>記録なし</span></p>`);
+                } else {
+                    $(".hard-mode").append(`<p>上級編 : <span>${result.HardHighScore}</span></p>`);
+                }
             });
 
-            // for文が回りきったら今回は必要のないプロパティとみなす
-            if(stage.length == cnt) {
-                return [false, {"error" : property + "は不必要なプロパティです。"}];
-            } else if(property == "Empty") {
-                return [false, {"error" : "全て入力してください。"}];
-            }
-
-            // 判定に使うための文字列を作成
-            var regexp;
-
-            if(input[i].value == "transform") {
-                for(key in answer[input[i].value]) {
-                    regexp = new RegExp(reg[input[i].value][key], 'g');
-                }
-            } else {
-                regexp = new RegExp(reg[input[i].value], 'g');
-            }
-
-            // プロパティに与えられた値が正しいか判定
-            if(input[i + 1].value == "") {
-                return [false, {"error" : input[i].value + "の値が空です。"}];
-            } else if(!input[i + 1].value.match(regexp)) {
-                return [false, {"error" : input[i].value + "の値が不正です。"}];
-            }
-
-            // ここまで来たら今回使用される正しいプロパティなので配列へ格納する
-            result_array[input[i].value] = input[i + 1].value;
-        }
-
-        // プロパティの被りを省く
-        for(key in result_array) {
-            result.push(key);
-        }
-
-        return [result, result_array];
+        $.ajax({
+            type: "get",
+            url: `${apiUrl}/play_history/list`,
+            contentType: 'application/json',
+            dataType: "json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", accessToken);
+            },
+        })
+            .done(function (result) {
+                playHistories = result
+                showTimeFlg.setDate(showTimeFlg.getDate() - 31);
+                showPlayHistories();
+            });
     }
 
-    /* --------------------------------------- */
-    /*      正解の値が入力されているか判定
-    /* --------------------------------------- */
-    function clearJudge(result, stage, sub) {
-        var reg = new RegExp('[^0-9]', 'g');
-        var clearFlg = true;
-        var error_msg = {};
+    // 表示期間切り替え時処理
+    $('#period-menu').change(function () {
+        showTimeFlg = new Date();
+        var selectTime = $('option:selected').val();
 
-        // 被りがある値をこの時点で省いているので、値を比較して異なっていたらプロパティが重複しているとみなす
-        if(result[0].length != stage.length) {
-            clearFlg = false;
-            error_msg["LengthError"] = "※重複しているプロパティが存在します。";
+        switch (selectTime) {
+            case "1":
+                showTimeFlg = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+                break;
+            case "2":
+                showTimeFlg.setDate(showTimeFlg.getDate() - 7);
+                break;
+            case "3":
+                showTimeFlg.setDate(showTimeFlg.getDate() - 31);
+                break;
+            case "4":
+                showTimeFlg.setDate(showTimeFlg.getDate() - 365);
+                break;
+            case "5":
+                showTimeFlg.setFullYear("0")
+                break;
         }
 
-        // 答えと入力された値を比べて正悟判定をする
-        for(key in result[1]) {
-            switch(key) {
-                case "width":
-                    if(Number(result[1][key].replace(reg, '')) != answer["width"]) {
-                        clearFlg = false;
-                        error_msg["WidthError"] = "※横の値が違います。";
-                    }
-                    break;
-                case "height":
-                    if(Number(result[1][key].replace(reg, '')) != answer["height"]) {
-                        clearFlg = false;
-                        error_msg["HeightError"] = "※縦の値が違います。";
-                    }
-                    break;
-                case "border-width":
-                    var border_width = result[1][key].replace(/[ ]/g, '').split("px");
 
-                    if(Number(border_width[1].replace(reg, '')) + Number(border_width[3].replace(reg, '')) != answer["width"]) {
-                        clearFlg = false;
-                        error_msg["WidthError"] = "※横の値が違います。";
-                    }
+        showPlayHistories();
+    })
 
-                    if(Number(border_width[2].replace(reg, '')) != answer["height"]) {
-                        clearFlg = false;
-                        error_msg["HeightError"] = "※縦の値が違います。";
-                    }
-                    break;
-                case "border-radius":
-                    if(Number(result[1][key].replace(reg, '')) < 50) {
-                        clearFlg = false;
-                        error_msg["RadiusError"] = "※不完全な円です。";
-                    }
-                    break;
-                case "border-color":
-                case "background-color":
-                    if(result[1][key] == answer["color-3"] || result[1][key] == answer["color-6"]) {
-                        break;
-                    }
+    // プレイ履歴表示の判定と表示処理
+    function showPlayHistories() {
+        $(".history-list").replaceWith(
+            `<div class="history-list">
+                <div class="history-none">
+                    <div class="history-card">
+                        記録なし
+                    </div>
+                </div>
+            </div>`
+        );
 
-                    clearFlg = false;
-                    error_msg["ColorError"] = "※指定した色が間違っています。";
-                    break;
-                case "opacity":
-                    if(Number(result[1][key].replace(/[^0-9.]/, '')) != 0.5 ) {
-                        clearFlg = false;
-                        error_msg["OpacityError"] = "※半透明にしてください。";
-                    }
-                    break;
-                case "filter":
-                    var filter_offset = result[1][key].replace(/drop-shadow/g, '').replace(/[() ]/g, '').split("px");
-                    filter_offset.pop();
+        for (key in playHistories) {
+            const playDay = new Date(playHistories[key].play_date);
+            if (playDay >= showTimeFlg) {
 
-                    if(filter_offset[0] != answer["filter"] || filter_offset[1] != answer["filter"]) {
-                        clearFlg = false;
-                        error_msg["FilterError"] = "※影の位置が違います。";
-                        break;
-                    }
-                    break;
-                case "transform":
-                    for(key_ in answer["transform"]) {
-                        switch(key_) { 
-                            case "rotate":
-                                if(Number(result[1][key].replace(/[^0-9]/g, '')) != answer["transform"][key_]) {
-                                    clearFlg = false;
-                                    error_msg["RotateError"] = "※傾きの角度が違います。";
-                                }
-                                break;
-                            case "translate":
-                                var translate_offset = String(result[1][key]).replace(/translate/g, '').replace(/[() ,]/g, '').split("px");
-                                translate_offset.pop();
 
-                                if(translate_offset[0] != answer["transform"][key_]["x"] || translate_offset[1] != answer["transform"][key_]["y"]) {
-                                    clearFlg = false;
-                                    error_msg["TranslateError"] = "※オブジェクトの位置が違います。";
-                                }
-                                break;
-                            case "scale":
-                                var scale_array = String(result[1][key]).replace(/scale/g, '').replace(/[() ]/g, '').split(",");
+                const year = playDay.getFullYear();
+                const month = playDay.getMonth() + 1;
+                const day = playDay.getDate();
 
-                                if(scale_array[0] != answer["transform"][key_]["x"] || scale_array[1] != answer["transform"][key_]["y"]) {
-                                    clearFlg = false;
-                                    error_msg["ScaleError"] = "※指定した倍率が違います。";
-                                }
-                                break;
-                        }
-                    }
-                    break;
-                case "background":
-                    var background_array = result[1][key].replace(/linear-gradient/g, '').replace(/[() ]/g, '').split(",");
+                $(".history-none").remove();
 
-                    if(background_array[0] == answer[key]["color_3"][0]) {
-                        
-                    } else if(background_array[0] == answer[key]["color_6"][0]) {
-
-                    } else {
-                        clearFlg = false;
-                        error_msg["BackgroundError"] = "※指定した色が間違っています。";
-                    }
-
-                    if(background_array[1] == answer[key]["color_3"][1]) {
-                        
-                    } else if(background_array[1] == answer[key]["color_6"][1]) {
-
-                    } else {
-                        clearFlg = false;
-                        error_msg["BackgroundError"] = "※指定した色が間違っています。";
-                    }
-                    break;
+                $(".history-list").append(
+                    `<div class="history-card">
+                        <div class="play-time">
+                            プレイ日時　: <span>${year}年${month}月${day}日</span>
+                        </div>
+                        <div class="play-mode">
+                            ゲームモード: <span>${playHistories[key].game_mode}</span>
+                        </div>
+                        <div class="goal-time">
+                            クリアタイム: <span>${playHistories[key].clear_time}</span>
+                        </div>
+                        <div class="rank">
+                            ランク　　　: <span>${playHistories[key].Rank}</span>
+                        </div>
+                        <div class="exp-points">
+                            獲得経験値　: <span>${playHistories[key].exp}</span>
+                        </div>
+                    </div>`
+                );
             }
-        }
-
-        // クリアした場合タイマーを止めてNextボタンを出現させる
-        // TODO 要調整
-        if(clearFlg) {
-            $(".modal").css("display", "block");
-            $("#main-body").css("filter", "blur(8px)");
-            
-            clearInterval(timer);
-
-            // 履歴にタイムを格納する
-            history["time"].push(time);
-
-            console.log("履歴 :");
-            console.log(history);
-        } else {
-            setErrorMsg(error_msg);
         }
     }
 
-    /* --------------------------------------- */
-    /*          エラーメッセージを出力
-    /* --------------------------------------- */
-    function setErrorMsg(error_msg) {
-        for(key in error_msg) {
-            $('.error-message').append($('<h3>エラー</h3><p>' + error_msg[key] + '</p>'));
-        }
-    }
-
-    /* --------------------------------------- */
-    /*              画面を初期化
-    /* --------------------------------------- */
-    // TODO 要調整
-    function init() {
-        answer = {
-            "width":"",
-            "height":"",
-            "filter":"",
-            "opacity":"",
-            "transform":"",
-            "background":"",
-        };
-        time = 0;
-
-        $('.question-text').empty();
-        $('.input-css').empty();
-        $('#object').removeAttr('style');
-
-        createQuestion();
-    }
 });
+
