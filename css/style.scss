@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 /*
-    共通部分
+    share stayle
 */
 * {
 	margin:0;
@@ -377,7 +377,7 @@ button{
         background: rgb(105, 105, 105);
         max-height: 328px;
         min-height: 200px;
-        height: calc(30vw + 42px);
+        height: auto;
         width: 50vw;
         max-width: 570px;
         @include mq-down(){
