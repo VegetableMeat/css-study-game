@@ -101,7 +101,7 @@ $(function () {
         "shortPw": false
     };
 
-    const apiUrl = "http://126.60.26.165:80";
+    const apiUrl = "https://css-study-game-webapi.herokuapp.com";
     var allErrorFlg = false;
     var errorMessageHtml = "";
 
@@ -394,6 +394,37 @@ $(function () {
                 if (!("token" in localStorage)) {
                     window.location.href = "login.html";
                 }
+                const accessToken = localStorage.getItem('token');
+                $.ajax({
+                    type: "get",
+                    url: `${apiUrl}/user/me`,
+                    contentType: 'application/json',
+                    dataType: "json",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", accessToken);
+                    },
+                })
+                    .done(function (result) {
+                        console.log(result)
+                        if (result.EasyHighScore === "0") {
+                            $(".before-max-easy-rank").append(`過去最高 Rank : <span>-</span>`);
+                        } else {
+                            $(".before-max-easy-rank").append(`過去最高 Rank : <span>${result.EasyHighScore}</span>`);
+                        }
+                        if (result.NormalHighScore === "0") {
+                            $(".before-max-normal-rank").append(`過去最高 Rank : <span>-</span>`);
+                        } else {
+                            $(".before-max-normal-rank").append(`過去最高 Rank : <span>${result.NormalHighScore}</span>`);
+                        }
+                        if (result.HardHighScore === "0") {
+                            $(".before-max-hard-rank").append(`過去最高 Rank : <span>-</span>`);
+                        } else {
+                            $(".before-max-hard-rank").append(`過去最高 Rank : <span>${result.HardHighScore}</span>`);
+                        }
+
+
+
+                    });
                 break;
             case "game":
                 if (!("token" in localStorage)) {
@@ -439,7 +470,6 @@ $(function () {
             async: false,
         })
             .done(function (result) {
-                console.log(result);
                 const nextLevelExp = result.NextExp;
                 expBarWidth = (levelUpExp - nextLevelExp) / levelUpExp * 100;
                 $("#profile .exp-bar").css("width", expBarWidth + "%");
@@ -449,26 +479,23 @@ $(function () {
                 $(".next-exp").append(`<span>${result.NextExp}</span>`);
                 $(".user-id").append(`<p><span>${result.UserID}</span></p>`);
                 $(".status").append(`<p><span>${result.Title}</span></p>`);
-                if (result.EasyHighScore === "") {
+                if (result.EasyHighScore === "0") {
                     $(".easy-mode").append(`<p>初級編 : <span>記録なし</span></p>`);
                 } else {
                     $(".easy-mode").append(`<p>初級編 : <span>${result.EasyHighScore}</span></p>`);
                 }
 
-                if (result.NormalHighScore === "") {
+                if (result.NormalHighScore === "0") {
                     $(".normal-mode").append(`<p>中級編 : <span>記録なし</span></p>`);
                 } else {
                     $(".normal-mode").append(`<p>中級編 : <span>${result.NormalHighScore}</span></p>`);
                 }
 
-                if (result.HardHighScore === "") {
+                if (result.HardHighScore === "0") {
                     $(".hard-mode").append(`<p>上級編 : <span>記録なし</span></p>`);
                 } else {
                     $(".hard-mode").append(`<p>上級編 : <span>${result.HardHighScore}</span></p>`);
                 }
-            })
-            .fail(function () {
-                console.log("NG")
             });
 
         $.ajax({
@@ -528,8 +555,6 @@ $(function () {
 
         for (key in playHistories) {
             const playDay = new Date(playHistories[key].play_date);
-            console.log(playDay)
-            console.log(showTimeFlg)
             if (playDay >= showTimeFlg) {
 
 

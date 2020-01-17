@@ -55,8 +55,6 @@ $(function () {
     };
     var time = 0;
     var time_add = function () {
-        // デバッグ用
-        console.log(time + "秒");
         time++;
     };
 
@@ -603,7 +601,7 @@ $(function () {
                     }
                 }
 
-                const apiUrl = "http://126.60.26.165:80";
+                const apiUrl = "https://css-study-game-webapi.herokuapp.com";
                 const today = new Date();
                 const accessToken = localStorage.getItem('token')
 
@@ -647,8 +645,6 @@ $(function () {
                         afterNextExp = result.NextExp;
                         getExp = score;
                         resLevel = result.Level;
-
-                        console.log(result)
                     });
 
                 getExpAnimation();
@@ -753,7 +749,6 @@ $(function () {
         var afterLevel = Math.floor(afterTotalExp / 1000) * 1;
 
         expBarWidth = 100 - beforeNextExp / levelUpExp * 100;
-        console.log(expBarWidth)
 
         $("#game .exp-bar").css("transition", "0s");
         $("#game .exp-bar").css("width", expBarWidth + "%");
@@ -799,7 +794,6 @@ $(function () {
             } else {
                 expBarWidth = 100 - afterNextExp / levelUpExp * 100;
                 $("#game .exp-bar").css("width", expBarWidth + "%");
-                console.log(expBarWidth)
             }
         }, 1000);
 
