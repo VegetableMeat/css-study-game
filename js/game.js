@@ -356,7 +356,7 @@ $(function () {
     /* --------------------------------------- */
     function ajax() {
         return $.ajax({
-            url: "stage.json",
+            url: "../json/stage.json",
             type: "GET",
             dataType: "json",
             data: { name: "type" },
